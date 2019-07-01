@@ -102,7 +102,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.reactoffline"
+        applicationId "com.foapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
