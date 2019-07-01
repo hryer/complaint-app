@@ -5,9 +5,7 @@
 // import memoize from 'libs/memoize';
 
 // import userStore from 'src/store/user';
-// import formsStore from 'src/store/forms';
-// import DataSensor from 'src/api/DataSensor';
-// import sensorApi from 'src/api/sensor';
+// import formsStore from 'src/store/forms
 
 // const RNProgressDialog = RN.NativeModules.RNProgressDialog;
 // const Netw = RN.NativeModules.Netw;

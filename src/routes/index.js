@@ -1,17 +1,26 @@
-// import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 
-// import Home from 'src/screens/Home';
-// import Labeling from 'src/screens/Labeling';
-// import DeveloperInfo from 'src/screens/DeveloperInfo';
+import Login from 'src/screens/Login';
 
-// const AppNavigator = createStackNavigator({
-//   Home,
-//   Labeling,
-//   DeveloperInfo,
-// }, {
-//   defaultNavigationOptions: {
-//     header: null,
-//   },
-// });
+import ListComplaints from 'src/screens/complaints/List';
+import DetailComplaints from 'src/screens/complaints/Detail';
+import AddComplaints from 'src/screens/complaints/Add';
+import EditComplaints from 'src/screens/complaints/Edit';
 
-// export default createAppContainer(AppNavigator);
+const AppNavigator = createStackNavigator(
+  {
+    Login: Login,
+    Complaints: ListComplaints,
+    // DetailComplaints: DetailComplaints,
+    // AddComplaints: AddComplaints,
+    // EditComplaints: EditComplaints
+  },
+  {
+    initialRouteName: "Login",
+    defaultNavigationOptions: {
+      header: null,
+    }
+  }
+);
+
+export default createAppContainer(AppNavigator);
