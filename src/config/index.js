@@ -1,18 +1,7 @@
 import moment from 'moment';
 
 export default config = {
-  urlAuth: 'http://api.efishery.com', // 'http://staging.api.efishery.com',
-  urlSensor: 'http://172.16.0.1:2516', // 'http://192.168.12.1:2516'
-  urlWsSensor: 'ws://172.16.0.1:2516/', // 'ws://192.168.12.1:8080/'
-  mqtt: {
-    qos: 0,
-    url: 'tcp://mqttbroker.efishery.com:1883',
-    username: 'efishery',
-    password: 'efishery2018',
-    clientId: 'SensorTools',
-  },
-  sensorTokenSuper: '12345678',
-
+  urlAuth: 'http://staging.api.efishery.com',//'http://api.efishery.com', 'http://staging.api.efishery.com',
   features: {
     wifiHybrid: false,
   },
