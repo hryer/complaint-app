@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 export default config = {
-  urlAuth: 'http://staging.api.efishery.com',//'http://api.efishery.com', 'http://staging.api.efishery.com',
+  urlAuth: 'http://staging.dash-api.efishery.com',//'http://api.efishery.com', 'http://staging.api.efishery.com',
   features: {
     wifiHybrid: false,
   },

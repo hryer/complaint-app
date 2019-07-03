@@ -1,67 +1,14 @@
-import { NavigationActions } from 'react-navigation';
 import { createAction } from 'redux-actions'
 
 import {
-  LOGIN_ATTEMPT,
-  LOGIN_SUCCESS,
-  LOGIN_ALREADY,
-  LOGIN_FAILED,
-  CREDENTIAL_FAILED,
-  LOGOUT_ATTEMPT,
-  LOGOUT_SUCCESS,
-  LOGIN_REFRESH } from './types';
+  REQUEST_LOGIN, REQUEST_LOGIN_FAILED, REQUEST_LOGOUT_SUCCESS,
+  REQUEST_LOGOUT, REQUEST_LOGOUT_FAILED, REQUEST_LOGIN_SUCCESS
+} from './types';
 
-const refreshLoginView = () => ({ type: LOGIN_REFRESH });
+export const requestLogin = createAction(REQUEST_LOGIN);
+export const requestLoginFailed = createAction(REQUEST_LOGIN_FAILED);
+export const requestLoginSuccess = createAction(REQUEST_LOGIN_SUCCESS);
 
-const login = (username, password) => (dispatch) => {
-  const promise = new Promise((resolve, reject) => {
-    dispatch({
-      type: LOGIN_ATTEMPT,
-      username,
-      password,
-    });
-
-    setTimeout(() => {
-      if (password !== '') {
-        resolve({
-          type: LOGIN_SUCCESS,
-          username,
-        });
-      } else {
-        reject();
-      }
-    }, 250);
-  });
-  return promise.then(obj => dispatch(obj))
-    .then(() => dispatch(NavigationActions.navigate({ routeName: 'Complaints' })))
-    .catch(() => dispatch({
-      type: LOGIN_FAILED,
-      message: 'Password is empty!',
-    }));
-};
-
-const logout = () => (dispatch) => {
-  const promise = new Promise((resolve) => {
-    dispatch({ type: LOGOUT_ATTEMPT });
-    setTimeout(() => {
-      resolve({ type: LOGOUT_SUCCESS });
-    }, 250);
-  });
-  return promise.then(obj => dispatch(obj))
-    .then(() => dispatch(NavigationActions.navigate({ routeName: 'Login' })))
-    .then(() => setTimeout(() => dispatch(refreshLoginView()), 500));
-};
-
-export {
-  LOGIN_ATTEMPT,
-  LOGIN_SUCCESS,
-  LOGIN_ALREADY,
-  LOGIN_FAILED,
-  CREDENTIAL_FAILED,
-  LOGOUT_ATTEMPT,
-  LOGOUT_SUCCESS,
-  LOGIN_REFRESH,
-  login,
-  logout,
-  refreshLoginView,
-};
+export const requestLogout = createAction(REQUEST_LOGOUT);
+export const requestLogoutFailed = createAction(REQUEST_LOGOUT_FAILED);
+export const requestLogoutSuccess = createAction(REQUEST_LOGOUT_SUCCESS);

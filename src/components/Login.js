@@ -9,23 +9,22 @@ class Login extends React.Component {
   constructor() {
     super();
     this.state = {
-      username: '',
+      email: '',
       password: ''
     };
   }
 
   componentDidMount() {
-    this.props.refreshLoginView();
     this.setState({
-      username: '',
+      email: '',
       password: '',
     });
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.state.username !== '' && nextProps.username === '') {
+    if (this.state.email !== '' && nextProps.email === '' && nextProps.password !== '' && this.state.password !== '') {
       this.setState({
-        username: '',
+        email: '',
         password: '',
       })
     }
@@ -39,9 +38,9 @@ class Login extends React.Component {
   }
 
   submit = () => {
-    const { login } = this.props;
-    const { username, password } = this.state;
-    login(username, password);
+    const { requestLogin } = this.props;
+    const { email, password } = this.state;
+    requestLogin({email, password});
   }
   
   render() {
@@ -61,8 +60,8 @@ class Login extends React.Component {
             <NB.Item stackedLabel>
               <NB.Label>Email eFishery :</NB.Label>
               <NB.Input
-                value={this.state.username}
-                onChangeText={value => this.setInput('username', value)}
+                value={this.state.email}
+                onChangeText={value => this.setInput('email', value)}
               />
             </NB.Item>
             <NB.Item stackedLabel>
@@ -90,9 +89,8 @@ class Login extends React.Component {
 Login.propTypes = {
   isError: PropTypes.bool.isRequired,
   message: PropTypes.string.isRequired,
-  username: PropTypes.string.isRequired,
-  refreshLoginView: PropTypes.func.isRequired,
-  login: PropTypes.func.isRequired,
+  email: PropTypes.string.isRequired,
+  requestLogin: PropTypes.func.isRequired,
 };
 
 export default Login;

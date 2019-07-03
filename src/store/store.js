@@ -5,30 +5,31 @@ import { offline } from '@redux-offline/redux-offline';
 import defaultConfig from '@redux-offline/redux-offline/lib/defaults';
 import { createOfflineMiddleware } from '@redux-offline/redux-offline/lib/middleware';
 
-import combineReducers from './redux/reducers';
-// import { watchSagas } from './sagas';
+import reducers from '../redux/reducers';
+import watchSagas from 'sagas/rootSagas';
 import logger from 'redux-logger'
+// import console from 'console'
 
 const offlineConfig = {
   ...defaultConfig,
 };
 
-// const sagaMiddleware = createSagaMiddleware(); sagaMiddleware, 
-const middleware = [logger, createOfflineMiddleware(offlineConfig)];
+const sagaMiddleware = createSagaMiddleware();
+const middleware = [createOfflineMiddleware(offlineConfig), sagaMiddleware, logger];
 
 export default function configureStore(initialState = {}) {
   const composeEnhancers = global.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
   const createOfflineStore = offline(offlineConfig)(createStore);
-
+  // console.log(reducers);
   const store = createOfflineStore(
-    combineReducers,
+    reducers,
     initialState,
     composeEnhancers(applyMiddleware(...middleware))
   );
 
   // run the sagas
-  // sagaMiddleware.run(watchSagas);
+  sagaMiddleware.run(watchSagas);
 
   return store;
 };

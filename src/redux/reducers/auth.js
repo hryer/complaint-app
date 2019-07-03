@@ -1,67 +1,64 @@
 import {
-  LOGIN_ATTEMPT,
-  LOGIN_SUCCESS,
-  LOGIN_FAILED,
-  CREDENTIAL_FAILED,
-  LOGOUT_ATTEMPT,
-  LOGOUT_SUCCESS,
-  LOGIN_REFRESH,
-} from 'actions/auth';
+  REQUEST_LOGIN, REQUEST_LOGIN_SUCCESS, REQUEST_LOGIN_FAILED,
+  REQUEST_LOGOUT, REQUEST_LOGOUT_SUCCESS, REQUEST_LOGOUT_FAILED
+} from 'actions/types';
 
-const defaultState = {
+export const initialState = {
   isLoggedIn: false,
-  username: '',
+  data: null,
   isError: false,
   message: ''
 }
 
-const auth = (state = defaultState, action) => {
-  const { type,
-    username = '',
-    message = ''
-  } = action;
+export const auth = (state = initialState, action) => {
+  const { type } = action;
 
   switch (type) {
-    case LOGIN_ATTEMPT: {
+    case REQUEST_LOGIN: {
       return {
         ...state,
+        data: null,
         message: 'Logging in...',
-        isError: false,
-      };
-    }
-    case LOGIN_SUCCESS: {
-      return {
-        ...state,
-        isLoggedIn: true,
-        username,
-        message,
-        isError: false,
+        isError: false
       }
     }
-    case LOGIN_FAILED: {
+    case REQUEST_LOGIN_FAILED: {
       return {
         ...state,
-        message,
-        isError: true,
-      };
-    }
-    case LOGOUT_SUCCESS: {
-      return {
-        ...state,
-        isLoggedIn: false,
+        data: action.errData,
+        message: action.errData.message,
+        isError: true
       }
     }
-    case LOGIN_REFRESH: {
+    case REQUEST_LOGIN_SUCCESS: {
       return {
         ...state,
-        message,
-        username,
-        isError: false,
-      };
+        data: action.data,
+        isError: false
+      }
     }
-    default: return state;
+    case REQUEST_LOGOUT: {
+      return {
+        ...state,
+        data: null,
+        isError: false
+      }
+    }
+    case REQUEST_LOGOUT_FAILED: {
+      return {
+        ...state,
+        data: action.errData,
+        isError: true
+      }
+    }
+    case REQUEST_LOGOUT_SUCCESS: {
+      return {
+        ...state,
+        data: action.data,
+        isError: false
+      }
+    }
+    default:
+      return {...state};
   }
 };
-
-export { defaultState };
-export default auth;

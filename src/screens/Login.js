@@ -3,19 +3,20 @@ import RN from 'react-native';
 import { connect } from 'react-redux';
 
 import Login from 'components/Login';
-import { login, refreshLoginView } from 'actions/auth';
+import { requestLogin, refreshLoginView } from 'actions/auth';
 import { List } from './complaints/List';
 
 const mapStateToProps = ({ auth }) => {
-  const { message, isError, username } = auth;
+  const { message, isError, email, password } = auth;
 
   return {
     isError,
     message,
-    username,
+    email,
+    password
   };
 };
 
-const mapDispatchToProps = { login, refreshLoginView };
+const mapDispatchToProps = { requestLogin, refreshLoginView };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
