@@ -5,7 +5,6 @@ const config = {};
 export function setNavigator(nav) {
   if (nav) {
     config.navigator = nav;
-    console.log(nav);
   }
 }
 

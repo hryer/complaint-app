@@ -21,7 +21,6 @@ export default function configureStore(initialState = {}) {
   const composeEnhancers = global.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
   const createOfflineStore = offline(offlineConfig)(createStore);
-  // console.log(reducers);
   const store = createOfflineStore(
     reducers,
     initialState,
