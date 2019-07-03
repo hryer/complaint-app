@@ -12,13 +12,14 @@ export function* fetchAuth(actions) {
       const errData = datas.data;
       yield put({ type: REQUEST_LOGIN_FAILED, errData});
     }else {
-      const data = datas.data;
-      yield put({ type: REQUEST_LOGIN_SUCCESS, data });
+      // const data = datas.data;
+      yield put({ type: REQUEST_LOGIN_SUCCESS, datas });
       NavigationService.navigate('Complaints');
       // yield put (NavigationActions.navigate({ routeName: 'Complaints' }))
     }
   }
-  catch (errData) {
+  catch (data) {
+    const errData = Object.assign(data,actions.payload);
     yield put({ type: REQUEST_LOGIN_FAILED, errData });
   }
 }

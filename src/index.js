@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { StatusBar, View } from 'react-native'
-
-import * as NB from 'native-base';
-import getTheme from '../native-base-theme/components';
-import material from '../native-base-theme/variables/material';
+import { StatusBar, View, NetInfo } from 'react-native'
 
 import DefaultRoute from 'src/routes';
 import configureStore from './store/store';
 import * as NavigationService from 'libs/navigation/NavigationServices.js'
+
+import * as NB from 'native-base';
+import getTheme from '../native-base-theme/components';
+import material from '../native-base-theme/variables/material';
 
 import { name as appName } from '../app.json';
 

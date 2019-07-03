@@ -7,8 +7,7 @@ import { createOfflineMiddleware } from '@redux-offline/redux-offline/lib/middle
 
 import reducers from '../redux/reducers';
 import watchSagas from 'sagas/rootSagas';
-import logger from 'redux-logger'
-// import console from 'console'
+import logger from 'redux-logger';
 
 const offlineConfig = {
   ...defaultConfig,

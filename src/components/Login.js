@@ -15,14 +15,22 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
+    this.props.resetRequest();
     this.setState({
       email: '',
       password: '',
     });
+    console.log('did mount');
+  }
+
+  componentWillUpdate() {
+    console.log('will update');
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.state.email !== '' && nextProps.email === '' && nextProps.password !== '' && this.state.password !== '') {
+    console.log(nextProps);
+    console.log('willReceive')
+    if (this.state.email !== '' && nextProps.email === '' || this.state.email == undefined) {
       this.setState({
         email: '',
         password: '',
@@ -40,6 +48,7 @@ class Login extends React.Component {
   submit = () => {
     const { requestLogin } = this.props;
     const { email, password } = this.state;
+    console.log(this.props)
     requestLogin({email, password});
   }
   
@@ -89,7 +98,7 @@ class Login extends React.Component {
 Login.propTypes = {
   isError: PropTypes.bool.isRequired,
   message: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
+  resetRequest: PropTypes.func.isRequired,
   requestLogin: PropTypes.func.isRequired,
 };
 

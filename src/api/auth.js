@@ -1,5 +1,5 @@
 import axios from 'axios'
-import config from 'src/config';
+import {urlLogin} from '../config';
 
 /* Result request Json (response)
 {
@@ -11,8 +11,6 @@ import config from 'src/config';
 */
 
 export const requestLogin = (payload) => {
-  const urlAuthLogin = `http://staging.dash-api.efishery.com/login`;
-
   var config = {
     headers: {
       'Content-Type': 'application/json',
@@ -25,7 +23,7 @@ export const requestLogin = (payload) => {
     "password": payload.password
   }
 
-  return axios.post(urlAuthLogin, bodyParameters, config)
+  return axios.post(urlLogin, bodyParameters, config)
     .then(function (response) {
       return response.data
     })
