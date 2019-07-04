@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { StatusBar, View, NetInfo } from 'react-native'
+import { StatusBar, View } from 'react-native';
 
 import DefaultRoute from 'src/routes';
 import configureStore from './store/store';
