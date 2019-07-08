@@ -9,10 +9,14 @@ import * as NavigationService from 'libs/navigation/NavigationServices.js'
 import * as NB from 'native-base';
 import getTheme from '../native-base-theme/components';
 import material from '../native-base-theme/variables/material';
+import { PersistGate } from "redux-persist/integration/react";
 
 import { name as appName } from '../app.json';
 
-const store = configureStore();
+const confStore = configureStore();
+const store = confStore.store;
+const persistor = confStore.persistor;
+
 export default class App extends Component {
   componentDidMount() {
     NavigationService.setNavigator(this.navigator);
@@ -21,13 +25,15 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <NB.StyleProvider style={getTheme(material)}>
-          <NB.Root>
-            <View style={{ flex: 1 }}>
-              <DefaultRoute ref={nav => { this.navigator = nav;}} />
-            </View>
-          </NB.Root>
-        </NB.StyleProvider>
+        <PersistGate loading={null} persistor={persistor}>
+          <NB.StyleProvider style={getTheme(material)}>
+            <NB.Root>
+              <View style={{ flex: 1 }}>
+                <DefaultRoute ref={nav => { this.navigator = nav; }} />
+              </View>
+            </NB.Root>
+          </NB.StyleProvider>
+        </PersistGate>
       </Provider>
     );
   }

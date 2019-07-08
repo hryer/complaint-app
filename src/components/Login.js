@@ -15,7 +15,7 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
-    this.props.resetRequest();
+    // this.props.resetAuthRequest();
     this.setState({
       email: '',
       password: '',
@@ -98,7 +98,7 @@ class Login extends React.Component {
 Login.propTypes = {
   isError: PropTypes.bool.isRequired,
   message: PropTypes.string.isRequired,
-  resetRequest: PropTypes.func.isRequired,
+  // resetAuthRequest: PropTypes.func.isRequired,
   requestLogin: PropTypes.func.isRequired,
 };
 

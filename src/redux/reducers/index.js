@@ -1,34 +1,27 @@
 import { combineReducers } from 'redux';
 import { reducer as network } from 'react-native-offline';
+import { persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
-import {auth} from './auth';
-
-const rootReducer = combineReducers({ 
-  network,
-  auth,
-  complaints
-});
+import { auth as authReducer } from './auth';
+import { complaints as complaintsReducer } from './complaints';
 
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["network", "chat"]
+  blacklist: ["network", "auth", "complaints"]
 };
 
-const chatPersistConfig = {
-  key: "chat",
+const complaintsPersistConfig = {
+  key: "complaints",
   storage: storage,
   blacklist: ["isNetworkBannerVisible"]
 };
 
-const rootReducer = combineReducers({
-  chat: persistReducer(chatPersistConfig, ChatReducer),
+export const rootReducer = combineReducers({
+  complaints: persistReducer(complaintsPersistConfig, complaintsReducer),
+  auth: authReducer,
   network
 });
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-const store = createStore(
-  persistedReducer,
-  applyMiddleware(networkMiddleware, sagaMiddleware)
-);
-let persistor = persistStore(store);
+export const persistedReducer = persistReducer(persistConfig, rootReducer);
