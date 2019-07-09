@@ -1,16 +1,16 @@
 import React from 'react';
 import RN from 'react-native';
 import * as NB from 'native-base';
+import console = require('console');
 
 export default class List extends React.PureComponent {
   constructor() {
     super();
-    this.state = {
-      email: '',
-      password: ''
-    };
   }
 
+  componentDidMount() {
+    console.log(this.props);
+  }
 
   render() {
     return (

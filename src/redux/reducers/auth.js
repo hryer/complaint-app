@@ -17,6 +17,7 @@ export const auth = (state = initialState, action) => {
   switch (type) {
     case REQUEST_LOGIN: {
       return {
+        ...state,
         data: null,
         message: 'Logging in...',
         isError: false
@@ -24,6 +25,7 @@ export const auth = (state = initialState, action) => {
     }
     case REQUEST_LOGIN_FAILED: {
       return {
+        ...state,
         data: action.errData,
         message: action.errData.message,
         isError: true,
@@ -32,7 +34,9 @@ export const auth = (state = initialState, action) => {
     }
     case REQUEST_LOGIN_SUCCESS: {
       return {
+        ...state,
         data: action.data,
+        message: 'Login Success',
         isError: false,
         isLoggedIn: true
       };

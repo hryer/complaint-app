@@ -12,7 +12,6 @@ export function* fetchAuth(actions) {
     }else {
       const data = Object.assign(datas.data,actions.payload);
       yield put({ type: REQUEST_LOGIN_SUCCESS, data });
-      // console.log(NavigationService.navigate);
       NavigationService.navigate('Complaints');
     }
   }

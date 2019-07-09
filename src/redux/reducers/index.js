@@ -9,7 +9,7 @@ import { complaints as complaintsReducer } from './complaints';
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["auth", "complaints","navigation"]
+  blacklist: ["auth", "navigation"]
 };
 
 const complaintsPersistConfig = {
