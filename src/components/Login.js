@@ -104,7 +104,7 @@ class Login extends React.Component {
 
 Login.propTypes = {
   isError: PropTypes.bool.isRequired,
-  message: PropTypes.string.isRequired,
+  // message: PropTypes.string.isRequired,
   // resetAuthRequest: PropTypes.func.isRequired,
   requestLogin: PropTypes.func.isRequired,
 };

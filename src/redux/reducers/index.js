@@ -25,3 +25,8 @@ export const rootReducer = combineReducers({
 });
 
 export const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+// export const persistedReducer = combineReducers({
+//   complaints: complaintsReducer,
+//   auth: authReducer
+// })
