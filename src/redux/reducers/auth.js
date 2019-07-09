@@ -26,19 +26,22 @@ export const auth = (state = initialState, action) => {
       return {
         data: action.errData,
         message: action.errData.message,
-        isError: true
+        isError: true,
+        isLoggedIn: false
       };
     }
     case REQUEST_LOGIN_SUCCESS: {
       return {
         data: action.data,
-        isError: false
+        isError: false,
+        isLoggedIn: true
       };
     }
     case REQUEST_LOGOUT: {
       return {
         data: null,
-        isError: false
+        isError: false,
+        isLoggedIn: false
       };
     }
     case REQUEST_LOGOUT_FAILED: {

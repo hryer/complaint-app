@@ -23,8 +23,14 @@ class Login extends React.Component {
     console.log('did mount');
   }
 
+  componentDidUpdate() {
+    console.log('did updated');
+    console.log(this.props);
+  }
+
   componentWillUpdate() {
     console.log('will update');
+    console.log(this.state);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -34,6 +40,7 @@ class Login extends React.Component {
       this.setState({
         email: '',
         password: '',
+        message: ''
       })
     }
   }

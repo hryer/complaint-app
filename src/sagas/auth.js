@@ -12,11 +12,23 @@ export function* fetchAuth(actions) {
     }else {
       const data = Object.assign(datas.data,actions.payload);
       yield put({ type: REQUEST_LOGIN_SUCCESS, data });
+      // console.log(NavigationService.navigate);
       NavigationService.navigate('Complaints');
     }
   }
   catch (errData) {
     errData = Object.assign(errData,actions.payload);
     yield put({ type: REQUEST_LOGIN_FAILED, errData });
+  }
+}
+
+export function* directPages(actions) {
+  try {
+    if(actions.data.token != undefined || actions.data.token != '') {
+      NavigationService.navigate('Complaints');
+      console.log('qontol');
+    }
+  } catch (errData) {
+    errData = Object.assign(errData,)
   }
 }

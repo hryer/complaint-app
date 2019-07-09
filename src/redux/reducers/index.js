@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { reducer as network } from 'react-native-offline';
+// import { reducer as network } from 'react-native-offline/src/redux';
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
@@ -9,7 +9,7 @@ import { complaints as complaintsReducer } from './complaints';
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["network", "auth", "complaints"]
+  blacklist: ["auth", "complaints","navigation"]
 };
 
 const complaintsPersistConfig = {
@@ -21,7 +21,7 @@ const complaintsPersistConfig = {
 export const rootReducer = combineReducers({
   complaints: persistReducer(complaintsPersistConfig, complaintsReducer),
   auth: authReducer,
-  network
+  // network
 });
 
 export const persistedReducer = persistReducer(persistConfig, rootReducer);

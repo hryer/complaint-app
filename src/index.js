@@ -10,6 +10,7 @@ import * as NB from 'native-base';
 import getTheme from '../native-base-theme/components';
 import material from '../native-base-theme/variables/material';
 import { PersistGate } from "redux-persist/integration/react";
+// import { NetworkProvider, ReduxNetworkProvider } from "react-native-offline";
 
 import { name as appName } from '../app.json';
 
@@ -26,13 +27,15 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <NB.StyleProvider style={getTheme(material)}>
-            <NB.Root>
-              <View style={{ flex: 1 }}>
-                <DefaultRoute ref={nav => { this.navigator = nav; }} />
-              </View>
-            </NB.Root>
-          </NB.StyleProvider>
+          {/* <ReduxNetworkProvider> */}
+            <NB.StyleProvider style={getTheme(material)}>
+              <NB.Root>
+                <View style={{ flex: 1 }}>
+                  <DefaultRoute ref={nav => { this.navigator = nav; }} />
+                </View>
+              </NB.Root>
+            </NB.StyleProvider>
+          {/* </ReduxNetworkProvider> */}
         </PersistGate>
       </Provider>
     );
