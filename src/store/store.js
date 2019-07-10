@@ -14,8 +14,6 @@ export default configureStore = () => {
     queueReleaseThrottle: 200,
   });
   const middleware = [networkMiddleware, sagaMiddleware, logger];
-  // const middleware = [sagaMiddleware, logger];
-
 
   const store = createStore(
     persistedReducer,
