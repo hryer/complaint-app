@@ -4,26 +4,19 @@ import axios from 'axios'
 export const requestComplaints = (payload) => {
   // http://staging.dash-api.efishery.com/complaint?startDate=2018&endDate=2018 GET
   // http://private-7208e-efisheryfrontendapi.apiary-mock.com/complaint?startDate=2018&endDate=2018
-  var config = {
+  let config = {
     headers: {
       'Content-Type': 'application/json',
-      'X-Api-Version': '1',
       'x-app-token': payload.token
     }
   };
 
-  var bodyParameters = {
-  }
+  const urlComplaints = `http://staging.dash-api.efishery.com/complaint?startDate=${payload.startDate}&endDate=${payload.endDate}`;
 
-  return axios.get('http://staging.dash-api.efishery.com/complaint?startDate=2018-07-03&endDate=2019-07-10', bodyParameters, config)
+  return axios.get(urlComplaints, config)
     .then(function (response) {
-      console.log('api response');
-      console.log(config);
-      console.log(payload);
-      console.log(response);
-      console.log('api response');
-
-      return response;
+      console.log(response.data);
+      return response.data;
     })
     .catch(function (error) {
       return error;

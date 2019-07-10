@@ -2,7 +2,7 @@ import React from 'react';
 import RN from 'react-native';
 import * as NB from 'native-base';
 import * as NavigationService from 'libs/navigation/NavigationServices.js'
-
+import moment from 'moment';
 class List extends React.PureComponent {
   constructor() {
     super();
@@ -14,7 +14,11 @@ class List extends React.PureComponent {
 
   componentDidMount() {
     console.log(this.props);
-    this.props.requestComplaints({token : this.props.token});
+    this.props.requestComplaints({
+      token : this.props.token,
+      startDate : moment().subtract('days', 7).format('YYYY-MM-DD'),
+      endDate: moment().format('YYYY-MM-DD')
+    });
     // const {token, isLoggedIn, username} = this.props;
 
     // if(token != null && token != undefined) {

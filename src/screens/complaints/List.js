@@ -6,7 +6,7 @@ import List from '../../components/complaints/List';
 import { requestComplaints, resetComplaintsRequest } from 'actions/complaints';
 
 const mapStateToProps = (state) => {
-  // console.log(state);
+  console.log(state);
   const { isLoggedIn } = state.auth;
   const { email, token } = state.auth.data;
   
