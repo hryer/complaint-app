@@ -4,16 +4,17 @@ import { connect } from 'react-redux';
 
 import Login from 'components/Login';
 import { requestLogin, resetAuthRequest } from 'actions/auth';
-import { List } from './complaints/List';
 
-const mapStateToProps = ({ auth }) => {
-  const { message, isError, email, password } = auth;
+const mapStateToProps = ( state ) => {
+  const { message, isError, email, password } = state.auth;
+  const { isConnected } = state.network;
 
   return {
     isError,
     message,
     email,
-    password
+    password,
+    isConnected
   };
 };
 

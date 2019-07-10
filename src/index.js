@@ -11,7 +11,6 @@ import getTheme from '../native-base-theme/components';
 import material from '../native-base-theme/variables/material';
 import { PersistGate } from "redux-persist/integration/react";
 import Loading from './components/Loading';
-// import { NetworkProvider, ReduxNetworkProvider } from "react-native-offline";
 
 import { name as appName } from '../app.json';
 
@@ -25,7 +24,6 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         <PersistGate loading={<Loading />} persistor={persistor} >
-          {/* <ReduxNetworkProvider> */}
           <NB.StyleProvider style={getTheme(material)}>
             <NB.Root>
               <View style={{ flex: 1 }}>
@@ -33,7 +31,6 @@ export default class App extends Component {
               </View>
             </NB.Root>
           </NB.StyleProvider>
-          {/* </ReduxNetworkProvider> */}
         </PersistGate>
       </Provider>
     );
