@@ -6,15 +6,18 @@ import Login from 'components/Login';
 import { requestLogin, resetAuthRequest } from 'actions/auth';
 
 const mapStateToProps = ( state ) => {
-  const { message, isError, email, password } = state.auth;
+  const { message, isError, isLoggedIn, data } = state.auth;
   const { isConnected } = state.network;
+  console.log('mapstateprops');
+  console.log(state);
+  console.log('mapstateprops');
 
   return {
     isError,
     message,
-    email,
-    password,
-    isConnected
+    isConnected,
+    isLoggedIn,
+    data
   };
 };
 

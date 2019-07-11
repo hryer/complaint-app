@@ -9,9 +9,13 @@ import { complaints as complaintsReducer } from './complaints';
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["auth", "navigation"]
+  blacklist: ["navigation"]
 };
 
+const authPersistConfig = {
+  key: "auth",
+  storage: storage
+}
 const complaintsPersistConfig = {
   key: "complaints",
   storage: storage,
@@ -20,7 +24,7 @@ const complaintsPersistConfig = {
 
 export const rootReducer = combineReducers({
   complaints: persistReducer(complaintsPersistConfig, complaintsReducer),
-  auth: authReducer,
+  auth: persistReducer(authPersistConfig, authReducer),
   network
 });
 

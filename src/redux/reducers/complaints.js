@@ -21,53 +21,47 @@ export const complaints = (state = initialState, action) => {
     }
     case REQUEST_COMPLAINTS: {
       return {
-        ...state,
         data: null,
-        message: 'Fetching complaints success...',
+        message: 'Getting complaints...',
         isError: false
       };
     }
+    case REQUEST_COMPLAINTS_SUCCESS: {
+      return {
+        data: action.data,
+        message: 'Complaints has been received',
+        isError: false
+      }
+    }
     case REQUEST_COMPLAINTS_FAILED: {
       return {
-        ...state,
         data: action.errData,
         message: action.errData.message,
         isError: true
       }
     }
-    case REQUEST_COMPLAINTS_SUCCESS: {
+    case REQUEST_ADD_COMPLAINT: {
       return {
-        ...state,
-        data: action.data,
-        isError: false
-      }
-    }
-    
-    case REQUEST_COMPLAINTS: {
-      return {
-        ...state,
         data: null,
-        message: 'Fetching complaints success...',
+        message: 'Adding complaint...',
         isError: false
       }
     }
-    case REQUEST_COMPLAINTS_FAILED: {
+    case REQUEST_ADD_COMPLAINT_SUCCESS: {
       return {
-        ...state,
+        data: action.data,
+        message: 'Complaint has been added',
+        isError: false
+      }
+    }
+    case REQUEST_ADD_COMPLAINT_FAILED: {
+      return {
         data: action.errData,
         message: action.errData.message,
         isError: true
       }
     }
-    case REQUEST_COMPLAINTS_SUCCESS: {
-      return {
-        ...state,
-        data: action.data,
-        isError: false
-      }
-    }
-
-    // TODO: create reducer for add, edit, etc
+    // TODO: create reducer for edit, etc
     default:
       return {...state};
   }

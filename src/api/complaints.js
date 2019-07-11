@@ -1,9 +1,7 @@
 import axios from 'axios'
-// import { urlLogin } from '../config';
+import { urlComplaints } from '../config';
 
 export const requestComplaints = (payload) => {
-  // http://staging.dash-api.efishery.com/complaint?startDate=2018&endDate=2018 GET
-  // http://private-7208e-efisheryfrontendapi.apiary-mock.com/complaint?startDate=2018&endDate=2018
   let config = {
     headers: {
       'Content-Type': 'application/json',
@@ -11,9 +9,9 @@ export const requestComplaints = (payload) => {
     }
   };
 
-  const urlComplaints = `http://staging.dash-api.efishery.com/complaint?startDate=${payload.startDate}&endDate=${payload.endDate}`;
+  const urlListComplaints = `${urlComplaints}?status=open%2Cunresolved&startDate=${payload.startDate}&endDate=${payload.endDate}`;
 
-  return axios.get(urlComplaints, config)
+  return axios.get(urlListComplaints, config)
     .then(function (response) {
       console.log(response.data);
       return response.data;
@@ -23,6 +21,7 @@ export const requestComplaints = (payload) => {
     })
 }
 
+// TODO:: INTEGRATE THIS DATA TO VIEW LISTS BEFORE INTEGRATE SAVE TO ASYNC DB or PERSISTS
 export const requestAddComplaint = (payload) => {
   // http://staging.dash-api.efishery.com/complaint POST
   return null;
