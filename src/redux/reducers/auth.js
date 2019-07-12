@@ -8,11 +8,13 @@ export const initialState = {
   isLoggedIn: false,
   data: null,
   isError: false,
-  message: ''
+  message: '',
+  lastLogin: ''
 }
 
 export const auth = (state = initialState, action) => {
   const { type } = action;
+  const loginDate = Date();
 
   switch (type) {
     case REQUEST_LOGIN: {
@@ -35,14 +37,16 @@ export const auth = (state = initialState, action) => {
         data: action.data,
         message: 'Login Success',
         isError: false,
-        isLoggedIn: true
+        isLoggedIn: true,
+        lastLogin: loginDate
       };
     }
     case REQUEST_LOGOUT: {
       return {
         data: null,
         isError: false,
-        isLoggedIn: false
+        isLoggedIn: false,
+        lastLogin: ''
       };
     }
     case REQUEST_LOGOUT_FAILED: {
@@ -52,10 +56,7 @@ export const auth = (state = initialState, action) => {
       };
     }
     case REQUEST_LOGOUT_SUCCESS: {
-      return {
-        data: action.data,
-        isError: false
-      };
+      return {...initialState};
     }
     case RESET_AUTH_REQUEST: {
       return {...initialState};

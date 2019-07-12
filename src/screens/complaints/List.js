@@ -4,20 +4,22 @@ import { connect } from 'react-redux';
 
 import List from '../../components/complaints/List';
 import { requestComplaints, resetComplaintsRequest } from 'actions/complaints';
+import { requestLogout } from 'actions/auth';
 
 const mapStateToProps = (state) => {
+  console.log('state lists props');
   console.log(state);
+  console.log('state lists props');
+
   const { isLoggedIn } = state.auth;
-  const { email, token } = state.auth.data;
-  
+  const authData = state.auth.data;
   const { data, isError, message } = state.complaints;
 
   const { isConnected, actionQueue } = state.network;
 
   return {
     isLoggedIn,
-    email,
-    token,
+    authData,
     data,
     isError,
     isConnected,
@@ -26,6 +28,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = { requestComplaints, resetComplaintsRequest };
+const mapDispatchToProps = { requestComplaints, resetComplaintsRequest, requestLogout };
 
 export default connect(mapStateToProps, mapDispatchToProps)(List);
