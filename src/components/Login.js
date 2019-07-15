@@ -25,23 +25,6 @@ class Login extends React.Component {
     }
   }
 
-  setInput = (name, value) => {
-    this.setState({
-      ...this.state.input,
-      [name]: value,
-    });
-  }
-
-  submit = () => {
-    const { requestLogin } = this.props;
-    const { email, password } = this.state;
-    requestLogin({ email, password });
-  }
-
-  autoLogin = () => {
-    NavigationService.navigate('Complaints');
-  }
-
   render() {
     const { message, isError, data, isLoggedIn } = this.props;
 
@@ -98,7 +81,25 @@ class Login extends React.Component {
       </NB.Container>
     );
   }
+
+  setInput = (name, value) => {
+    this.setState({
+      ...this.state.input,
+      [name]: value,
+    });
+  }
+
+  submit = () => {
+    const { requestLogin } = this.props;
+    const { email, password } = this.state;
+    requestLogin({ email, password });
+  }
+
+  autoLogin = () => {
+    NavigationService.navigate('Complaints');
+  }
 }
+
 
 Login.propTypes = {
   isError: PropTypes.bool.isRequired,

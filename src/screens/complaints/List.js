@@ -7,10 +7,6 @@ import { requestComplaints, resetComplaintsRequest } from 'actions/complaints';
 import { requestLogout } from 'actions/auth';
 
 const mapStateToProps = (state) => {
-  console.log('state lists props');
-  console.log(state);
-  console.log('state lists props');
-
   const { isLoggedIn } = state.auth;
   const authData = state.auth.data;
   const { data, isError, message } = state.complaints;

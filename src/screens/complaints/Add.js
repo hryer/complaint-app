@@ -6,23 +6,14 @@ import Add from '../../components/complaints/Add';
 import { requestAddComplaint, resetComplaintsRequest } from 'actions/complaints';
 
 const mapStateToProps = (state) => {
-  console.log(state);
-  const { isLoggedIn } = state.auth;
-  const { email, token } = state.auth.data;
-
-  const { data, isError, message } = state.complaints;
+  const { isLoggedIn } = state.auth;]
 
   const { isConnected, actionQueue } = state.network;
 
   return {
     isLoggedIn,
-    email,
-    token,
-    data,
-    isError,
     isConnected,
     actionQueue,
-    message
   };
 };
 

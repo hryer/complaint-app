@@ -9,7 +9,8 @@ import {
 export const initialState = {
   data: null,
   isError: false,
-  message: ''
+  message: '',
+  errData: null
 }
 
 export const complaints = (state = initialState, action) => {
@@ -23,19 +24,21 @@ export const complaints = (state = initialState, action) => {
       return {
         data: null,
         message: 'Getting complaints...',
-        isError: false
+        isError: false,
+        errData: null
       };
     }
     case REQUEST_COMPLAINTS_SUCCESS: {
       return {
         data: action.data,
         message: 'Complaints has been received',
-        isError: false
+        isError: false,
+        errData: null
       }
     }
     case REQUEST_COMPLAINTS_FAILED: {
       return {
-        data: action.errData,
+        errData: action.errData,
         message: action.errData.message,
         isError: true
       }

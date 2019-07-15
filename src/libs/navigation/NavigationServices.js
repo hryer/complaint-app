@@ -8,9 +8,8 @@ export function setNavigator(nav) {
   }
 }
 
-export function navigate(routeName, params) {console.log(`func terpanggil ${config.navigator}`);
+export function navigate(routeName, params) {
   if (config.navigator && routeName) {
-    console.log('masuk');
     let action = NavigationActions.navigate({ routeName, params });
     config.navigator.dispatch(action);
   }
