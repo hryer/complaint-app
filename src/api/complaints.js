@@ -18,7 +18,6 @@ export const requestComplaints = (payload) => {
 
   return axios.get(urlListComplaints, config)
     .then(function (response) {
-      console.log(response.data);
       return response.data;
     }).catch(function (error) {
       return error;
@@ -33,28 +32,30 @@ export const requestAddComplaint = (payload) => {
   console.log('api');
   let config = {
     headers: {
+      'Content-Type': 'multipart/form-data',
+      'X-Api-Version': '1',
       'x-app-token': payload.token
     }
   };
 
-  config.body = new FormData();
+  let dataComplaint = new FormData();
   console.log(payload.data);
-  const temp = payload.data;
+  const temp = payload.data; 
  
   Object.keys(temp).forEach(function(key) {
     console.log(key, temp[key]);
     if(key == 'subcategory') {
-      config.body.append('subcategory[]',temp[key]);
+      dataComplaint.append('subcategory[]',temp[key]);
     }else {
-      config.body.append(key,temp[key]);
+      dataComplaint.append(key,temp[key]);
     }
   });
-
+  
   console.log('config');
   console.log(config);
   console.log('config');
 
-  return axios.post(urlComplaints,config)
+  return axios.post(urlComplaints,dataComplaint,config)
     .then(function (response) {
       console.log('respone api');
       console.log(response);

@@ -9,7 +9,9 @@ export function setNavigator(nav) {
 }
 
 export function navigate(routeName, params) {
+  console.log(config.navigator);
   if (config.navigator && routeName) {
+    console.log('kimak');
     let action = NavigationActions.navigate({ routeName, params });
     config.navigator.dispatch(action);
   }

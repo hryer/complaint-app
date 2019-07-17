@@ -18,7 +18,7 @@ const AppNavigator = createStackNavigator(
     // EditComplaint: EditComplaint
   },
   {
-    initialRouteName: "AddComplaint",
+    initialRouteName: "Login",
     defaultNavigationOptions: {
       header: null,
     }

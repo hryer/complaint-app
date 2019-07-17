@@ -47,6 +47,7 @@ export const complaints = (state = initialState, action) => {
     }
     case REQUEST_ADD_COMPLAINT: {
       return {
+        ...state,
         postData: null,
         message: 'Adding complaint...',
         isError: false,
@@ -55,6 +56,7 @@ export const complaints = (state = initialState, action) => {
     }
     case REQUEST_ADD_COMPLAINT_SUCCESS: {
       return {
+        ...state,
         postData: action.data,
         message: 'Complaint has been added',
         isError: false,
@@ -63,6 +65,7 @@ export const complaints = (state = initialState, action) => {
     }
     case REQUEST_ADD_COMPLAINT_FAILED: {
       return {
+        ...state,
         errPostData: action.errData,
         message: action.errData.message,
         isError: true

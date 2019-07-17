@@ -4,79 +4,72 @@ import { checkInternetConnection, offlineActionTypes } from 'react-native-offlin
 import * as NB from 'native-base';
 import * as NavigationService from 'libs/navigation/NavigationServices.js'
 import moment from 'moment';
+import Loading from '../Loading';
 class List extends React.PureComponent {
   constructor() {
     super();
-
-    this.state = {
-      showComplaints: []
-    };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const { requestComplaints, isConnected, actionQueue, authData } = this.props;
-    this.state.showComplaints = [];
 
-    if (isConnected === true) {
-      requestComplaints({
+    if (isConnected === true && authData != null && authData != undefined) {
+      await requestComplaints({
         token: authData.token,
         startDate: moment().subtract(30, 'days').format('YYYY-MM-DD'),
         endDate: moment().format('YYYY-MM-DD')
       });
     }
 
-    if (this.props.data != null && this.props.data != undefined) {
-      this.state.showComplaints = [...this.props.data];
-    }
-    console.log('props');
-    console.log(this.props);
-    console.log('props');
-    console.log(this.state.showComplaints);
     if (this.props.isLoggedIn === false) {
       NavigationService.navigate('Login');
     }
   }
 
   render() {
-    return (
-      <NB.Container>
-        <NB.Header noLeft>
-          <NB.Left />
-          <NB.Body>
-            <NB.Title>List Complaint</NB.Title>
-          </NB.Body>
-          <NB.Right />
-        </NB.Header>
+    if (this.props.data === null || this.props.data === undefined) {
+      return <Loading />
+    } else {
+      return (
+        <NB.Container>
+          <NB.Header noLeft>
+            <NB.Left />
+            <NB.Body>
+              <NB.Title>List Complaint</NB.Title>
+            </NB.Body>
+            <NB.Right />
+          </NB.Header>
 
-        <NB.Content>
-          <NB.List>
-            <RN.FlatList
-              data={this.state.showComplaints}
-              renderItem={({ item }) => (
-                <NB.ListItem key={item.id.toString()}>
-                  <NB.Left>
-                    <NB.Text>{item.category}</NB.Text>
-                  </NB.Left>
-                  <NB.Body>
-                    <NB.Text>{item.complaint}</NB.Text>
-                    <NB.Text note>{item.status}</NB.Text>
-                  </NB.Body>
-                  <NB.Right>
-                    <NB.Icon name="arrow-forward" />
-                  </NB.Right>
-                </NB.ListItem>
-              )}
-              keyExtractor={item => item.id.toString()}
-            />
-          </NB.List>
+          <NB.Content>
+            <NB.List>
+              <RN.FlatList
+                data={this.props.data}
+                renderItem={({ item }) => (
+                  <NB.ListItem key={item.id.toString()}>
+                    <NB.Left>
+                      <NB.Text>{item.category}</NB.Text>
+                    </NB.Left>
+                    <NB.Body>
+                      <NB.Text>{item.complaint}</NB.Text>
+                      <NB.Text note>{item.status}</NB.Text>
+                    </NB.Body>
+                    <NB.Right>
+                      <NB.Icon name="arrow-forward" />
+                    </NB.Right>
+                  </NB.ListItem>
+                )}
+                keyExtractor={item => item.id.toString()}
+              />
+            </NB.List>
 
-        </NB.Content>
+          </NB.Content>
 
-        <NB.Fab position='bottomRight' onPress={this.showMenu}>
-          <NB.Icon name='menu' />
-        </NB.Fab>
-      </NB.Container>
-    )
+          <NB.Fab position='bottomRight' onPress={this.showMenu}>
+            <NB.Icon name='menu' />
+          </NB.Fab>
+        </NB.Container>
+      )
+    }
   }
 
   showMenu = () => {
@@ -93,9 +86,9 @@ class List extends React.PureComponent {
         icon: 'refresh',
         onPress: async () => {
           const isConnectedCall = await checkInternetConnection();
-          
-          if(isConnectedCall != this.props.isConnected){
-            this.setState(isConnected,isConnectedCall);
+
+          if (isConnectedCall != this.props.isConnected) {
+            this.setState(isConnected, isConnectedCall);
             this.props.syncConnection({ isConnected: isConnected });
             alert('sync success');
             // TODO: CHECK IF CONNECTION TRUS META AUTOMATE TRUE AND THEN UPLOAD THE OFFLINEQUEUE
