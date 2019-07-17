@@ -49,14 +49,14 @@ class Login extends React.Component {
               </NB.Button>
             ) : (
               <NB.Form>
-                <NB.Item stackedLabel>
+                <NB.Item floatingLabel>
                   <NB.Label>Email eFishery :</NB.Label>
                   <NB.Input
                     value={this.state.email}
                     onChangeText={value => this.setInput('email', value)}
                   />
                 </NB.Item>
-                <NB.Item stackedLabel>
+                <NB.Item floatingLabel last>
                   <NB.Label>Password :</NB.Label>
                   <NB.Input
                     value={this.state.password}
@@ -84,7 +84,7 @@ class Login extends React.Component {
 
   setInput = (name, value) => {
     this.setState({
-      ...this.state.input,
+      ...this.state,
       [name]: value,
     });
   }

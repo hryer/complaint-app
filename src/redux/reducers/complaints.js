@@ -8,9 +8,11 @@ import {
 
 export const initialState = {
   data: null,
+  postData: null,
   isError: false,
   message: '',
-  errData: null
+  errData: null,
+  errPostData: null
 }
 
 export const complaints = (state = initialState, action) => {
@@ -45,26 +47,31 @@ export const complaints = (state = initialState, action) => {
     }
     case REQUEST_ADD_COMPLAINT: {
       return {
-        data: null,
+        postData: null,
         message: 'Adding complaint...',
-        isError: false
+        isError: false,
+        errPostData: null
       }
     }
     case REQUEST_ADD_COMPLAINT_SUCCESS: {
       return {
-        data: action.data,
+        postData: action.data,
         message: 'Complaint has been added',
-        isError: false
+        isError: false,
+        errPostData: null
       }
     }
     case REQUEST_ADD_COMPLAINT_FAILED: {
       return {
-        data: action.errData,
+        errPostData: action.errData,
         message: action.errData.message,
         isError: true
       }
     }
-    // TODO: create reducer for edit, etc
+    /* TODO :: Make sure add complaint work with integration react native offline
+    Create reducer for edit complaint
+    Create reducer for detail complaint
+    */
     default:
       return {...state};
   }

@@ -16,7 +16,9 @@ export function navigate(routeName, params) {
 }
 
 export function goBack() {
+  console.log('goblok');
   if (config.navigator) {
+    console.log('goback');
     let action = NavigationActions.back({});
     config.navigator.dispatch(action);
   }

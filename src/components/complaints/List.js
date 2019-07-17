@@ -79,32 +79,27 @@ class List extends React.PureComponent {
     )
   }
 
-
-  async internetChecker() {
-    const isConnected = await checkInternetConnection();
-    // Dispatching can be done inside a connected component, a thunk (where dispatch is injected), saga, or any sort of middleware
-    // In this example we are using a thunk
-    console.log(isConnected);
-    // dispatch({
-    //   type: offlineActionTypes.CONNECTION_CHANGE,
-    //   payload: isConnected,
-    // });
-  }
-
   showMenu = () => {
     const options = [
       {
         text: 'Tambah Data Baru',
         icon: 'add',
         onPress: () => {
-          NavigationService.navigate('Add');
+          NavigationService.navigate('AddComplaint');
         },
       },
       {
         text: 'Sinkronkan Data',
         icon: 'refresh',
-        onPress: () => {
-          this.internetChecker();
+        onPress: async () => {
+          const isConnectedCall = await checkInternetConnection();
+          
+          if(isConnectedCall != this.props.isConnected){
+            this.setState(isConnected,isConnectedCall);
+            this.props.syncConnection({ isConnected: isConnected });
+            alert('sync success');
+            // TODO: CHECK IF CONNECTION TRUS META AUTOMATE TRUE AND THEN UPLOAD THE OFFLINEQUEUE
+          }
         },
       },
       {

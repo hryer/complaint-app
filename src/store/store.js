@@ -11,6 +11,7 @@ import logger from 'redux-logger';
 export default configureStore = () => {
   const sagaMiddleware = createSagaMiddleware();
   const networkMiddleware = createNetworkMiddleware({
+    actionTypes: ['REQUEST_ADD_COMPLAINT','REQUEST_EDIT_COMPLAINT'],
     queueReleaseThrottle: 200,
   });
   const middleware = [networkMiddleware, sagaMiddleware, logger];

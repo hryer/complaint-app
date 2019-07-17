@@ -1,6 +1,11 @@
 import axios from 'axios'
 import { urlComplaints } from '../config';
 
+/* 
+TODO::
+  ADD COMPLAINT API
+  CONNECT WITH SAGAS
+*/
 export const requestComplaints = (payload) => {
   let config = {
     headers: {
@@ -15,8 +20,7 @@ export const requestComplaints = (payload) => {
     .then(function (response) {
       console.log(response.data);
       return response.data;
-    })
-    .catch(function (error) {
+    }).catch(function (error) {
       return error;
     })
 }
@@ -24,7 +28,57 @@ export const requestComplaints = (payload) => {
 // TODO:: INTEGRATE THIS DATA TO VIEW LISTS BEFORE INTEGRATE SAVE TO ASYNC DB or PERSISTS
 export const requestAddComplaint = (payload) => {
   // http://staging.dash-api.efishery.com/complaint POST
-  return null;
+  console.log('api');
+  console.log(payload);
+  console.log('api');
+  let config = {
+    headers: {
+      'x-app-token': payload.token
+    }
+  };
+
+  config.body = new FormData();
+  console.log(payload.data);
+  const temp = payload.data;
+ 
+  Object.keys(temp).forEach(function(key) {
+    console.log(key, temp[key]);
+    if(key == 'subcategory') {
+      config.body.append('subcategory[]',temp[key]);
+    }else {
+      config.body.append(key,temp[key]);
+    }
+  });
+
+  console.log('config');
+  console.log(config);
+  console.log('config');
+
+  return axios.post(urlComplaints,config)
+    .then(function (response) {
+      console.log('respone api');
+      console.log(response);
+      console.log('respone api');
+
+      return response.data;
+    }).catch(function (error) {
+      console.log('axios wakwaw');
+      return error;
+    });
+    // const tempToken = payload.token;
+    // console.log(tempToken);
+    // return axios({
+    //   method: 'POST',
+    //   url: urlComplaints,
+    //   data: formData,
+    //   config: { headers: { 'content-type': 'multipart/form-data', 'x-app-token': payload.token }},
+    // }).then(function (response) {
+    //   console.log(response);
+    //   console.log('respone api');
+    // }).catch(function (error) {
+    //   console.log('axios wakwaw');
+    //   return error;
+    // });
 }
 
 export const requestDetailComplaint = (payload) => {

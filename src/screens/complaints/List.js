@@ -3,7 +3,7 @@ import RN from 'react-native';
 import { connect } from 'react-redux';
 
 import List from '../../components/complaints/List';
-import { requestComplaints, resetComplaintsRequest } from 'actions/complaints';
+import { requestComplaints, resetComplaintsRequest, syncConnection } from 'actions/complaints';
 import { requestLogout } from 'actions/auth';
 
 const mapStateToProps = (state) => {
@@ -24,6 +24,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = { requestComplaints, resetComplaintsRequest, requestLogout };
+const mapDispatchToProps = { requestComplaints, resetComplaintsRequest, requestLogout, syncConnection };
 
 export default connect(mapStateToProps, mapDispatchToProps)(List);
