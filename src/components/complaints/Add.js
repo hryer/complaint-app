@@ -37,7 +37,6 @@ class AddComplaint extends React.PureComponent {
   }
 
   componentDidMount() {
-    console.log(this.props);
     this.state.token = this.props.token;
     const { isConnected, requestOwners } = this.props;
 
@@ -330,7 +329,6 @@ resolved_at: 2019-07-17T00:00:00.000+07:00
         }
       });
     }
-    console.log(this.state);
   }
 
   findOwner = (query) => {
@@ -343,8 +341,7 @@ resolved_at: 2019-07-17T00:00:00.000+07:00
     return dataOwner.filter(dataOwner => dataOwner.name.search(regex) >= 0);
   }
   onSubmit = () => {
-    console.log(this.state);
-    // this.props.requestAddComplaint(this.state);
+    this.props.requestAddComplaint(this.state);
   }
 }
 

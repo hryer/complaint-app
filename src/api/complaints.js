@@ -30,11 +30,9 @@ export const requestAddComplaint = (payload) => {
   };
 
   let dataComplaint = new FormData();
-  console.log(payload.data);
   const temp = payload.data; 
  
   Object.keys(temp).forEach(function(key) {
-    console.log(key, temp[key]);
     if(key == 'subcategory') {
       dataComplaint.append('subcategory[]',temp[key]);
     }else {
@@ -44,13 +42,8 @@ export const requestAddComplaint = (payload) => {
 
   return axios.post(urlComplaints,dataComplaint,config)
     .then(function (response) {
-      console.log('respone api');
-      console.log(response);
-      console.log('respone api');
-
       return response;
     }).catch(function (error) {
-      console.log('axios wakwaw');
       return error;
     });
 }

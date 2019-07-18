@@ -26,9 +26,6 @@ export function* getComplaints(actions) {
 export function* postComplaint(actions) {
   try {
     const data = yield call(requestAddComplaint,actions.payload);
-    console.log('sagas');
-    console.log(data);
-    console.log('sagas');
 
     if(data.status === 204) {
       yield put({ type: REQUEST_ADD_COMPLAINT_SUCCESS });

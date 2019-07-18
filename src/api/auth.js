@@ -13,7 +13,6 @@ export const requestLogin = (payload) => {
     "email": payload.email,
     "password": payload.password
   }
-  console.log(payload);
   return axios.post(urlLogin, bodyParameters, config)
     .then(function (response) {
       return response.data

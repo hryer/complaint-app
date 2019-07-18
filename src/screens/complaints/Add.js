@@ -28,8 +28,6 @@ const mapStateToProps = (state) => {
       errPostData = state.complaints.errPostData;
     }
   */
- console.log(state);
-
   return {
     isLoggedIn,
     isConnected,

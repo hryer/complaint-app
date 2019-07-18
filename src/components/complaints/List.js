@@ -12,7 +12,7 @@ class List extends React.PureComponent {
 
   async componentDidMount() {
     this.getData();
-    console.log(this.props);
+
     if (this.props.isLoggedIn === false) {
       NavigationService.navigate('Login');
     }
