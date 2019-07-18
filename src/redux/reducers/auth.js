@@ -1,7 +1,7 @@
 import {
   REQUEST_LOGIN, REQUEST_LOGIN_SUCCESS, REQUEST_LOGIN_FAILED,
   REQUEST_LOGOUT, REQUEST_LOGOUT_SUCCESS, REQUEST_LOGOUT_FAILED,
-  RESET_AUTH_REQUEST
+  RESET_REQUEST_AUTH
 } from 'actions/types';
 
 export const initialState = {
@@ -58,7 +58,7 @@ export const auth = (state = initialState, action) => {
     case REQUEST_LOGOUT_SUCCESS: {
       return {...initialState};
     }
-    case RESET_AUTH_REQUEST: {
+    case RESET_REQUEST_AUTH: {
       return {...initialState};
     }
     default:

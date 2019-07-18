@@ -17,7 +17,7 @@ class Login extends React.Component {
 
   componentDidMount() { console.log('did mount'); console.log(this.props);
     if (this.props.data === null && this.props.data === undefined) {
-      this.props.resetAuthRequest();
+      this.props.resetRequestAuth();
       this.setState({
         email: '',
         password: '',

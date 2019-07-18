@@ -1,7 +1,7 @@
 import { call, put } from 'redux-saga/effects'
 import { REQUEST_LOGIN_SUCCESS, REQUEST_LOGIN_FAILED, 
   REQUEST_LOGOUT_SUCCESS, REQUEST_LOGOUT_FAILED,
-  RESET_COMPLAINTS_REQUEST  } from 'actions/types';
+  RESET_REQUEST_COMPLAINTS  } from 'actions/types';
 import { requestLogin } from 'api/auth';
 import * as NavigationService from 'libs/navigation/NavigationServices.js'
 
@@ -26,7 +26,7 @@ export function* getAuth(actions) {
 
 export function* logoutAuth(actions) {
   try {
-    yield put({ type: RESET_COMPLAINTS_REQUEST});
+    yield put({ type: RESET_REQUEST_COMPLAINTS});
     yield put({ type: REQUEST_LOGOUT_SUCCESS});
     NavigationService.navigate('Login');
   } catch (errData) {

@@ -3,7 +3,7 @@ import {
   REQUEST_DETAIL_COMPLAINT, REQUEST_DETAIL_COMPLAINT_SUCCESS, REQUEST_DETAIL_COMPLAINT_FAILED,
   REQUEST_ADD_COMPLAINT, REQUEST_ADD_COMPLAINT_SUCCESS, REQUEST_ADD_COMPLAINT_FAILED,
   REQUEST_EDIT_COMPLAINT, REQUEST_EDIT_COMPLAINT_SUCCESS, REQUEST_EDIT_COMPLAINT_FAILED,
-  RESET_COMPLAINTS_REQUEST
+  RESET_REQUEST_COMPLAINTS
 } from 'actions/types';
 
 export const initialState = {
@@ -19,7 +19,7 @@ export const complaints = (state = initialState, action) => {
   const { type } = action;
 
   switch (type) {
-    case RESET_COMPLAINTS_REQUEST: {
+    case RESET_REQUEST_COMPLAINTS: {
       return {...initialState};
     }
     case REQUEST_COMPLAINTS: {
@@ -57,7 +57,7 @@ export const complaints = (state = initialState, action) => {
     case REQUEST_ADD_COMPLAINT_SUCCESS: {
       return {
         ...state,
-        postData: action.data,
+        postData: 'complaint has been added',
         message: 'Complaint has been added',
         isError: false,
         errPostData: null
@@ -67,7 +67,7 @@ export const complaints = (state = initialState, action) => {
       return {
         ...state,
         errPostData: action.errData,
-        message: action.errData.message,
+        message: 'add complaint failed',
         isError: true
       }
     }

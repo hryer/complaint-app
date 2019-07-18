@@ -11,16 +11,8 @@ class List extends React.PureComponent {
   }
 
   async componentDidMount() {
-    const { requestComplaints, isConnected, actionQueue, authData } = this.props;
-
-    if (isConnected === true && authData != null && authData != undefined) {
-      await requestComplaints({
-        token: authData.token,
-        startDate: moment().subtract(30, 'days').format('YYYY-MM-DD'),
-        endDate: moment().format('YYYY-MM-DD')
-      });
-    }
-
+    this.getData();
+    console.log(this.props);
     if (this.props.isLoggedIn === false) {
       NavigationService.navigate('Login');
     }
@@ -37,9 +29,12 @@ class List extends React.PureComponent {
             <NB.Body>
               <NB.Title>List Complaint</NB.Title>
             </NB.Body>
-            <NB.Right />
+            <NB.Right>
+              <NB.Subtitle>
+                Pending Upload : {this.props.actionQueue}
+              </NB.Subtitle>
+            </NB.Right>
           </NB.Header>
-
           <NB.Content>
             <NB.List>
               <RN.FlatList
@@ -61,9 +56,7 @@ class List extends React.PureComponent {
                 keyExtractor={item => item.id.toString()}
               />
             </NB.List>
-
           </NB.Content>
-
           <NB.Fab position='bottomRight' onPress={this.showMenu}>
             <NB.Icon name='menu' />
           </NB.Fab>
@@ -72,6 +65,30 @@ class List extends React.PureComponent {
     }
   }
 
+  getData = async () => {
+    const { requestComplaints, isConnected, actionQueue, authData } = this.props;
+
+    if (isConnected === true && authData != null && authData != undefined) {
+      await requestComplaints({
+        token: authData.token,
+        startDate: moment().subtract(90, 'days').format('YYYY-MM-DD'),
+        endDate: moment().format('YYYY-MM-DD')
+      });
+    }
+  }
+
+  syncData = async () => {
+    const isConnectedCall = await checkInternetConnection();
+    
+    if (isConnectedCall != this.props.isConnected) {
+      this.setState(isConnected, isConnectedCall);
+      this.props.syncConnection({ isConnected: isConnected });
+    }
+
+    this.getData();
+    alert('sync data success');
+  }
+  
   showMenu = () => {
     const options = [
       {
@@ -84,16 +101,7 @@ class List extends React.PureComponent {
       {
         text: 'Sinkronkan Data',
         icon: 'refresh',
-        onPress: async () => {
-          const isConnectedCall = await checkInternetConnection();
-
-          if (isConnectedCall != this.props.isConnected) {
-            this.setState(isConnected, isConnectedCall);
-            this.props.syncConnection({ isConnected: isConnected });
-            alert('sync success');
-            // TODO: CHECK IF CONNECTION TRUS META AUTOMATE TRUE AND THEN UPLOAD THE OFFLINEQUEUE
-          }
-        },
+        onPress: this.syncData,
       },
       {
         text: 'Logout',

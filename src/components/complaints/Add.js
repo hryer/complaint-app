@@ -7,27 +7,19 @@ class AddComplaint extends React.PureComponent {
   constructor() {
     super();
     this.state = {
-      data : {
-        user_id: '1',
-        feeder_barcode: '00001-AL03005090R-SMIT',
-        category: 'software',
-        subcategory: 'feeder',
-        complaint: 'aweawe',
-        complaint_type: 'failure',
-        cause: 'dadada',
-        troubleshoot: 'qweqwe',
-        status: 'open',
-        source: 'WA',
-        issued_at: moment().format('YYYY-MM-DD'),
-        resolved_at: moment().format('YYYY-MM-DD')
-      },
+      data : this.getInitialData,
       token: ''
     }
-    this.setDate = this.setDate.bind(this);
   }
 
   componentDidMount() {
+    console.log(this.props);
     this.state.token = this.props.token;
+    const { isConnected, requestOwners } = this.props;
+
+    requestOwners({
+      token: this.state.token
+    });
   }
   /*
   TODO:: Add Design
@@ -81,120 +73,66 @@ resolved_at: 2019-07-17T00:00:00.000+07:00
 
             <NB.Item stackedLabel>
               <NB.Label>Pilih Kategori :</NB.Label>
-
-              <NB.ListItem>
-
-                <NB.Radio
-                  onPress={() => this.setInput('category','hardware')}
-                  selected={this.state.data.category == 'hardware'} />
-                <NB.Text>
-                  Hardware
-                    </NB.Text>
-              </NB.ListItem>
-              <NB.ListItem>
-                <NB.Radio
-                  onPress={() => this.setInput('category','software')}
-                  selected={this.state.data.category == 'software'} />
-                  <NB.Text>
-                  Software
-                </NB.Text>
-              </NB.ListItem>
+              <NB.Item picker>
+                <NB.Picker
+                  mode="dropdown"
+                  iosIcon={<NB.Icon name="arrow-down" />}
+                  style={{ width: undefined }}
+                  placeholder="Pilih kategori"
+                  placeholderStyle={{ color: "#bfc6ea" }}
+                  placeholderIconColor="#039978"
+                  selectedValue={this.state.data.category}
+                  onValueChange={value => this.setInput('category',value)}
+                >
+                  <NB.Picker.Item label="Hardware" value="hardware" />
+                  <NB.Picker.Item label="Software" value="software" />
+                </NB.Picker>
+              </NB.Item>
             </NB.Item>
 
             <NB.Item stackedLabel>
               <NB.Label>Pilih Sub-Kategori :</NB.Label>
-              <NB.ListItem stackedLabel>
-                <NB.Radio
-                  onPress={() => this.setInput('subcategory','container')}
-                  selected={this.state.data.subcategory == 'container'} />
-                <NB.Text>
-                  Container
-                </NB.Text>
-              </NB.ListItem>
-              <NB.ListItem stackedLabel>
-                <NB.Radio
-                  onPress={() => this.setInput('subcategory','feeder')}
-                  selected={this.state.data.subcategory == 'feeder'} />
-                <NB.Text>
-                  Feeder
-                </NB.Text>
-              </NB.ListItem>
-              <NB.ListItem stackedLabel>
-                <NB.Radio
-                  onPress={() => this.setInput('subcategory','control box')}
-                  selected={this.state.data.subcategory == 'control box'} />
-                <NB.Text>
-                  Control Box
-                </NB.Text>
-              </NB.ListItem>
-              <NB.ListItem stackedLabel>
-                <NB.Radio
-                  onPress={() => this.setInput('subcategory','apps')}
-                  selected={this.state.data.subcategory == 'apps'} />
-                <NB.Text>
-                  Apps
-                </NB.Text>
-              </NB.ListItem>
-              <NB.ListItem stackedLabel>
-                <NB.Radio
-                  onPress={() => this.setInput('subcategory','dashboard')}
-                  selected={this.state.data.subcategory == 'dashboard'} />
-                <NB.Text>
-                  Dashboard
-                </NB.Text>
-              </NB.ListItem>
-              <NB.ListItem stackedLabel>
-                <NB.Radio
-                  onPress={() => this.setInput('subcategory','lainnya')}
-                  selected={this.state.data.subcategory == 'lainnya'} />
-                <NB.Text>
-                  Lainnya
-                </NB.Text>
-              </NB.ListItem>
+              <NB.Item picker>
+                <NB.Picker
+                  mode="dropdown"
+                  iosIcon={<NB.Icon name="arrow-down" />}
+                  style={{ width: undefined }}
+                  placeholder="Pilih kategori"
+                  placeholderStyle={{ color: "#bfc6ea" }}
+                  placeholderIconColor="#039978"
+                  selectedValue={this.state.data.subcategory}
+                  onValueChange={value => this.setInput('subcategory',value)}
+                >
+                  <NB.Picker.Item label="Container" value="container" />
+                  <NB.Picker.Item label="Feeder" value="feeder" />
+                  <NB.Picker.Item label="Control Box" value="control box" />
+                  <NB.Picker.Item label="Apps" value="apps" />
+                  <NB.Picker.Item label="Dashboard" value="dashboard" />
+                  <NB.Picker.Item label="Lainnya" value="lainnya" />
+                </NB.Picker>
+              </NB.Item>
             </NB.Item>
 
             <NB.Item stackedLabel>
               <NB.Label>Pilih Status :</NB.Label>
-              <NB.ListItem stackedLabel>
-                <NB.Radio
-                  onPress={() => this.setInput('status','open')}
-                  selected={this.state.data.status == 'open'} />
-                <NB.Text>
-                  Open
-                </NB.Text>
-              </NB.ListItem>
-              <NB.ListItem stackedLabel>
-                <NB.Radio
-                  onPress={() => this.setInput('status','resolved')}
-                  selected={this.state.data.status == 'resolved'} />
-                <NB.Text>
-                  Resolved
-                </NB.Text>
-              </NB.ListItem>
-              <NB.ListItem stackedLabel>
-                <NB.Radio
-                  onPress={() => this.setInput('status','unresolved')}
-                  selected={this.state.data.status == 'unresolved'} />
-                <NB.Text>
-                  UnResolved
-                </NB.Text>
-              </NB.ListItem>
-              <NB.ListItem stackedLabel>
-                <NB.Radio
-                  onPress={() => this.setInput('status','pending') }
-                  selected={this.state.data.status == 'pending'} />
-                <NB.Text>
-                  Pending
-                </NB.Text>
-              </NB.ListItem>
-              <NB.ListItem stackedLabel>
-                <NB.Radio
-                  onPress={value => this.setInput('status','invalid')}
-                  selected={this.state.data.status == 'invalid'} />
-                <NB.Text>
-                  Invalid
-                </NB.Text>
-              </NB.ListItem>
+              <NB.Item picker>
+                <NB.Picker
+                  mode="dropdown"
+                  iosIcon={<NB.Icon name="arrow-down" />}
+                  style={{ width: undefined }}
+                  placeholder="Pilih kategori"
+                  placeholderStyle={{ color: "#bfc6ea" }}
+                  placeholderIconColor="#039978"
+                  selectedValue={this.state.data.status}
+                  onValueChange={value => this.setInput('status',value)}
+                >
+                  <NB.Picker.Item label="Open" value="open" />
+                  <NB.Picker.Item label="Resolved" value="resolved" />
+                  <NB.Picker.Item label="Unresolved" value="unresolved" />
+                  <NB.Picker.Item label="Pending" value="pending" />
+                  <NB.Picker.Item label="Invalid" value="invalid" />
+                </NB.Picker>
+              </NB.Item>
             </NB.Item>
 
             <NB.Item stackedLabel>
@@ -215,8 +153,8 @@ resolved_at: 2019-07-17T00:00:00.000+07:00
                   placeholder="Select your SIM"
                   placeholderStyle={{ color: "#bfc6ea" }}
                   placeholderIconColor="#039978"
-                  selectedValue={this.state.complaint_type}
-                  onValueChange={this.onSelectChange.bind(this)}
+                  selectedValue={this.state.data.complaint_type}
+                  onValueChange={value => this.setInput('complaint_type', value)}
                 >
                   <NB.Picker.Item label="Failure" value="failure" />
                   <NB.Picker.Item label="Complaint" value="complaint" />
@@ -263,14 +201,28 @@ resolved_at: 2019-07-17T00:00:00.000+07:00
                 placeHolderText="Pilih Tanggal"
                 textStyle={{ color: "green" }}
                 placeHolderTextStyle={{ color: "#d3d3d3" }}
-                onDateChange={this.setDate}
+                onDateChange={value => this.setInput('issued_at',value)}
                 disabled={false}
               />
-              {/* <NB.Text>
-                Date: {this.state.issued_at.toString()}
-              </NB.Text> */}
             </NB.Item>
-            {/* <NB.Text>{errMessage}</NB.Text> */}
+
+            <NB.Item stackedLabel>
+              <NB.Label>Tanggal Diselesaikan :</NB.Label>
+              <NB.DatePicker
+                defaultDate={new Date()}
+                maximumDate={new Date()}
+                locale={"id"}
+                timeZoneOffsetInMinutes={undefined}
+                modalTransparent={false}
+                animationType={"fade"}
+                androidMode={"default"}
+                placeHolderText="Pilih Tanggal"
+                textStyle={{ color: "green" }}
+                placeHolderTextStyle={{ color: "#d3d3d3" }}
+                onDateChange={value => this.setInput('resolved_at',value)}
+                disabled={false}
+              />
+            </NB.Item>
             <NB.Button
               block
               style={{ margin: 15 }}
@@ -284,29 +236,42 @@ resolved_at: 2019-07-17T00:00:00.000+07:00
     )
   }
 
+  getInitialData = () => {
+    return {
+      user_id: '1',
+      feeder_barcode: '00001-AL03005090R-SMIT',
+      category: '',
+      subcategory: '',
+      complaint: '',
+      complaint_type: '',
+      cause: '',
+      troubleshoot: '',
+      status: '',
+      source: '',
+      issued_at: moment().format('YYYY-MM-DD'),
+      resolved_at: moment().format('YYYY-MM-DD')
+    }
+  }
+
   getLost = () => {
     NavigationService.goBack();
   }
 
-  setDate(newDate) {
-    newDate = moment(newDate).format('YYYY-MM-DD');
-    this.setInput('issued_at', newDate);
-  }
-
   setInput = (name, value) => {
+    if(name === 'issued_at' || name === 'resolved_at') {
+      value = moment(value).format('YYYY-MM-DD');
+    }
     this.setState({
-      ...this.state.data,
-      [name]: value,
+      data:{
+        ...this.state.data,
+        [name]: value
+      }
     });
-  }
-
-  onSelectChange = (value: string) => {
-    this.setState({
-      complaint_type: value
-    });
+    console.log(this.state);
   }
 
   onSubmit = () => {
+    console.log(this.state);
     this.props.requestAddComplaint(this.state);
   }
 }

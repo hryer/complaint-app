@@ -1,11 +1,11 @@
-import { createAction } from 'redux-actions'
+import { createAction } from 'redux-actions';
 
 import {
   REQUEST_COMPLAINTS, REQUEST_COMPLAINTS_SUCCESS, REQUEST_COMPLAINTS_FAILED,
   REQUEST_DETAIL_COMPLAINT, REQUEST_DETAIL_COMPLAINT_SUCCESS ,REQUEST_DETAIL_COMPLAINT_FAILED,
   REQUEST_ADD_COMPLAINT, REQUEST_ADD_COMPLAINT_SUCCESS, REQUEST_ADD_COMPLAINT_FAILED,
   REQUEST_EDIT_COMPLAINT, REQUEST_EDIT_COMPLAINT_SUCCESS, REQUEST_EDIT_COMPLAINT_FAILED,
-  RESET_COMPLAINTS_REQUEST
+  RESET_REQUEST_COMPLAINTS
 } from './types';
 
 import { offlineActionTypes } from 'react-native-offline';
@@ -14,7 +14,7 @@ import { offlineActionTypes } from 'react-native-offline';
   TODO:: // 
   // Refactor action support offline use meta retry: true and offline config action
 */
-export const resetComplaintsRequest = createAction(RESET_COMPLAINTS_REQUEST);
+export const resetRequestComplaints = createAction(RESET_REQUEST_COMPLAINTS);
 
 export const requestComplaints = createAction(REQUEST_COMPLAINTS);
 export const requestComplaintsSuccess = createAction(REQUEST_COMPLAINTS_SUCCESS); 

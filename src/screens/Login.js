@@ -3,7 +3,7 @@ import RN from 'react-native';
 import { connect } from 'react-redux';
 
 import Login from 'components/Login';
-import { requestLogin, resetAuthRequest } from 'actions/auth';
+import { requestLogin, resetRequestAuth } from 'actions/auth';
 
 const mapStateToProps = ( state ) => {
   const { message, isError, isLoggedIn, data } = state.auth;
@@ -18,6 +18,6 @@ const mapStateToProps = ( state ) => {
   };
 };
 
-const mapDispatchToProps = { requestLogin, resetAuthRequest };
+const mapDispatchToProps = { requestLogin, resetRequestAuth };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

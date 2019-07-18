@@ -1,12 +1,12 @@
-import { createAction } from 'redux-actions'
+import { createAction } from 'redux-actions';
 
 import {
   REQUEST_LOGIN, REQUEST_LOGIN_FAILED, REQUEST_LOGOUT_SUCCESS,
   REQUEST_LOGOUT, REQUEST_LOGOUT_FAILED, REQUEST_LOGIN_SUCCESS,
-  RESET_AUTH_REQUEST
+  RESET_REQUEST_AUTH
 } from './types';
 
-export const resetAuthRequest = createAction(RESET_AUTH_REQUEST);
+export const resetRequestAuth= createAction(RESET_REQUEST_AUTH);
 
 export const requestLogin = createAction(REQUEST_LOGIN);
 export const requestLoginFailed = createAction(REQUEST_LOGIN_FAILED);

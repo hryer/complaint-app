@@ -1,5 +1,5 @@
 import { call, put } from 'redux-saga/effects'
-import { REQUEST_COMPLAINTS_SUCCESS, REQUEST_COMPLAINTS_FAILED,
+import { REQUEST_COMPLAINTS, REQUEST_COMPLAINTS_SUCCESS, REQUEST_COMPLAINTS_FAILED,
           REQUEST_ADD_COMPLAINT_SUCCESS, REQUEST_ADD_COMPLAINT_FAILED 
 } from 'actions/types';
 import { requestComplaints, requestAddComplaint } from 'api/complaints';
@@ -25,17 +25,16 @@ export function* getComplaints(actions) {
 
 export function* postComplaint(actions) {
   try {
-    const datas = yield call(requestAddComplaint,actions.payload);
+    const data = yield call(requestAddComplaint,actions.payload);
     console.log('sagas');
-    console.log(datas);
+    console.log(data);
     console.log('sagas');
 
-    if(datas.success == true) {
-      const data = datas.data;
-      yield put({ type: REQUEST_ADD_COMPLAINT_SUCCESS, data});
+    if(data.status === 204) {
+      yield put({ type: REQUEST_ADD_COMPLAINT_SUCCESS });
       NavigationService.navigate('Complaints');
     }else {
-      const errData = Object.assign(datas.data.actions.payload);
+      const errData = [...data];
       yield put({ type: REQUEST_ADD_COMPLAINT_FAILED, errData });
     }
   } catch (errData) {
