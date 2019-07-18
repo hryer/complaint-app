@@ -9,13 +9,13 @@ export function* getOwners(actions) {
     console.log(datas);
     console.log('owners');
 
-    // if (datas.success == false) {
-    //   const errData = Object.assign(datas.data,actions.payload);
-    //   yield put({ type: REQUEST_COMPLAINTS_FAILED, errData});
-    // }else {
-    //   const data = datas.data;
-    //   yield put({ type: REQUEST_COMPLAINTS_SUCCESS, data });
-    // }
+    if(datas.success === true) {
+      const data = datas.data;
+      yield put({ type: REQUEST_OWNERS_SUCCESS, data });
+    }else {
+      const errData = Object.assign(datas.data,actions.payload);
+      yield put({ type: REQUEST_OWNERS_FAILED, errData });
+    }
   } catch (errData) {
     yield put({ type: REQUEST_OWNERS_FAILED, errData });
   }

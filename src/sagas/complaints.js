@@ -9,7 +9,7 @@ export function* getComplaints(actions) {
   try {
     const datas = yield call(requestComplaints,actions.payload);
 
-    if (datas.success == false) {
+    if (datas.success === false) {
       const errData = Object.assign(datas.data,actions.payload);
       yield put({ type: REQUEST_COMPLAINTS_FAILED, errData});
     }else {
