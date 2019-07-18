@@ -9,27 +9,21 @@ import Loading from '../Loading';
 const styles = RN.StyleSheet.create({
   autocompleteContainer: {
     backgroundColor: 'black',
-    flex: 1,
-    marginLeft: 100,
-    paddingLeft: 0,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    position: 'relative',
     width: 150,
     zIndex: 1,
-    borderColor: 'transparent'
+    borderColor: 'transparent',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignContent: 'flex-start',
+    alignContent: 'flex-start'
   },
   autocompleteInput: {
-    flex: 1,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-    backgroundColor: 'red'
+    backgroundColor: '#039978',
+    color: '#ffffff'
   },
   autocompleteList: {
-    flex: 1,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-    backgroundColor: 'green'
+    backgroundColor: '#039978',
+    color: '#ffffff'
   }
 });
 class AddComplaint extends React.PureComponent {
@@ -101,7 +95,7 @@ resolved_at: 2019-07-17T00:00:00.000+07:00
                 value={this.state.data.user_id}
                 onChangeText={value => this.setInput('user_id', value)}
               /> */}
-                <NB.View style={styles.autocompleteContainer}>
+                <RN.View style={styles.autocompleteContainer}>
                   <Autocomplete
                     containerStyle={styles.autocompleteInput}
                     autoCapitalize="none"
@@ -121,7 +115,7 @@ resolved_at: 2019-07-17T00:00:00.000+07:00
                     )}
                     keyExtractor={item => item.id.toString()}
                   />
-                </NB.View>
+                </RN.View>
 
               </NB.Item>
 
