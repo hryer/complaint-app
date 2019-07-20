@@ -24,7 +24,6 @@ export const complaints = (state = initialState, action) => {
     }
     case REQUEST_COMPLAINTS: {
       return {
-        data: null,
         message: 'Getting complaints...',
         isError: false,
         errData: null
@@ -71,9 +70,30 @@ export const complaints = (state = initialState, action) => {
         isError: true
       }
     }
+    case REQUEST_DETAIL_COMPLAINT: {
+      return {
+        message: 'get detail complaint...',
+        isError: false,
+        errData: null
+      }
+    }
+    case REQUEST_DETAIL_COMPLAINT_SUCCESS: {
+      return {
+        message: 'get detail complaint success',
+        detailData: action.data,
+        isError: false,
+        errData: null
+      }
+    }
+    case REQUEST_DETAIL_COMPLAINT_FAILED: {
+      return {
+        message: 'get detail complaint failed',
+        isError: true,
+        errData: action.errData
+      }
+    }
     /* TODO :: Make sure add complaint work with integration react native offline
     Create reducer for edit complaint
-    Create reducer for detail complaint
     */
     default:
       return {...state};

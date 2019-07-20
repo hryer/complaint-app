@@ -4,13 +4,13 @@ import { requestOwners } from 'api/owners';
 
 export function* getOwners(actions) {
   try {
-    const datas = yield call(requestOwners,actions.payload);
+    const rootData = yield call(requestOwners,actions.payload);
     
-    if(datas.success === true) {
-      const data = datas.data;
+    if(rootData.success === true) {
+      const data = rootData.data;
       yield put({ type: REQUEST_OWNERS_SUCCESS, data });
     }else {
-      const errData = Object.assign(datas.data,actions.payload);
+      const errData = Object.assign(rootData.data,actions.payload);
       yield put({ type: REQUEST_OWNERS_FAILED, errData });
     }
   } catch (errData) {

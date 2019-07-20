@@ -19,7 +19,6 @@ export const owners = (state = initialState, action) => {
     }
     case REQUEST_OWNERS: {
       return {
-        dataOwner: null,
         message: 'Getting owners...',
         isError: false,
         errDataOwner: null

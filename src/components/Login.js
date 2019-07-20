@@ -1,7 +1,5 @@
 import React from 'react';
 import RN from 'react-native';
-// import userStore from 'src/store/user';
-
 import PropTypes from 'prop-types';
 import * as NB from 'native-base';
 import * as NavigationService from 'libs/navigation/NavigationServices.js'

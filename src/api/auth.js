@@ -21,28 +21,3 @@ export const requestLogin = (payload) => {
       return error
     })
 }
-
-export const requestLogout = (payload) => {
-  // const urlAuthLogout = `${config.urlAuth}/logout`;
-
-  // var config = {
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     'X-App-token': 'app_token',
-  //     'X-Api-Version': '1'
-  //   }
-  // };
-
-  // var bodyParameters = {
-  //   "email": payload.email,
-  //   "password": payload.password
-  // }
-
-  // return axios.post(urlAuthLogout, bodyParameters, config)
-  //   .then(function (response) {
-  //     return response.data
-  //   })
-  //   .catch(function (error) {
-  //     return error
-  //   })
-}

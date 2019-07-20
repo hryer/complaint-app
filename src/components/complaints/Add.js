@@ -19,7 +19,6 @@ const styles = RN.StyleSheet.create({
   },
   autocompleteInput: {
     backgroundColor: '#039978',
-    color: '#ffffff'
   },
   autocompleteList: {
     backgroundColor: '#039978',
@@ -46,23 +45,7 @@ class AddComplaint extends React.PureComponent {
       });
     }
   }
-  /*
-  TODO:: Add Design
-    user_id: 1
-feeder_barcode: 00002-AL03005090R-F3ot
-category: software
-status: pending
-complaint: knknk
-fo: vadadva
-cr: adva
-complaint_type: failure
-cause: asdad
-troubleshoot: asdqwf
-source: asvasvda
-subcategory[]: apps
-issued_at: 2019-07-17T00:00:00.000+07:00
-resolved_at: 2019-07-17T00:00:00.000+07:00
-  */
+
   render() {
     const { dataOwner } = this.props;
     const { query } = this.state;
@@ -278,6 +261,23 @@ resolved_at: 2019-07-17T00:00:00.000+07:00
                   disabled={false}
                 />
               </NB.Item>
+
+              <NB.Item stackedLabel>
+                <NB.Label>FO :</NB.Label>
+                <NB.Input
+                  value={this.state.data.fo}
+                  onChangeText={value => this.setInput('fo', value)}
+                />
+              </NB.Item>
+
+              <NB.Item stackedLabel>
+                <NB.Label>CR :</NB.Label>
+                <NB.Input
+                  value={this.state.data.cr}
+                  onChangeText={value => this.setInput('cr', value)}
+                />
+              </NB.Item>
+
               <NB.Button
                 block
                 style={{ margin: 15 }}
@@ -294,7 +294,7 @@ resolved_at: 2019-07-17T00:00:00.000+07:00
 
   getInitialData = () => {
     return {
-      user_id: '1',
+      user_id: '',
       feeder_barcode: '00001-AL03005090R-SMIT',
       category: '',
       subcategory: '',
@@ -305,7 +305,9 @@ resolved_at: 2019-07-17T00:00:00.000+07:00
       status: '',
       source: '',
       issued_at: moment().format('YYYY-MM-DD'),
-      resolved_at: moment().format('YYYY-MM-DD')
+      resolved_at: moment().format('YYYY-MM-DD'),
+      cr: '',
+      fo: ''
     }
   }
 

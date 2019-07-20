@@ -1,3 +1,4 @@
+import moment from 'moment';
 import {
   REQUEST_LOGIN, REQUEST_LOGIN_SUCCESS, REQUEST_LOGIN_FAILED,
   REQUEST_LOGOUT, REQUEST_LOGOUT_SUCCESS, REQUEST_LOGOUT_FAILED,
@@ -14,7 +15,7 @@ export const initialState = {
 
 export const auth = (state = initialState, action) => {
   const { type } = action;
-  const loginDate = Date();
+  const loginDate = moment().format('YYYY-MM-DD');
 
   switch (type) {
     case REQUEST_LOGIN: {
