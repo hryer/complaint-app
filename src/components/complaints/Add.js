@@ -111,8 +111,11 @@ class AddComplaint extends React.PureComponent {
                         renderItem={({ item, i }) => (
                           <RN.TouchableOpacity onPress={
                             () => {
-                              this.setInput('query', item.name);
-                              this.setInput('user_id', item.id);
+                              this.setState(prevState => ({
+                                ...prevState,
+                                query: item.name,
+                                user_id: item.id
+                              }))
                             }
                           }>
                             <NB.Text style={styles.autocompleteList}>{item.name}</NB.Text>
@@ -399,10 +402,11 @@ class AddComplaint extends React.PureComponent {
 
   setInput = (name, value) => {
     if (name === 'query' || name === 'token' || name === 'isEditable') {
-      this.setState(prevState => ({
-        ...prevState,
+      console.log(value);
+      this.setState({
+        ...this.state,
         [name]: value
-      }));
+      });
     } else {
       if (name === 'issued_at' || name === 'resolved_at') {
         value = moment(value).format('YYYY-MM-DD');

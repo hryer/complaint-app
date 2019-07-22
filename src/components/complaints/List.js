@@ -61,7 +61,7 @@ class List extends React.PureComponent {
               />
             </NB.List>
           </NB.Content>
-          <NB.Fab containerStyle={styles.fab} position='bottomRight' onPress={this.showMenu}>
+          <NB.Fab position='bottomRight' onPress={this.showMenu} style={styles.fab} >
             <NB.Icon name='menu' />
           </NB.Fab>
         </NB.Container>
@@ -82,7 +82,7 @@ class List extends React.PureComponent {
   }
 
   getDetailData = async (complaint_id) => {
-    const { requestDetailComplaint, isConnected, authData } = this.props;
+    const { requestDetailComplaint, isConnectedf, authData } = this.props;
 
     if (isConnected === true && authData != null && authData != undefined) {
       await requestDetailComplaint({
