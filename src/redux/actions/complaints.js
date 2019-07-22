@@ -28,7 +28,7 @@ export const requestAddComplaint = createAction('REQUEST_ADD_COMPLAINT', payload
 export const requestAddComplaintSuccess = createAction(REQUEST_ADD_COMPLAINT_SUCCESS);
 export const requestAddComplaintFailed = createAction(REQUEST_ADD_COMPLAINT_FAILED);
 
-export const requestEditComplaint = createAction(REQUEST_EDIT_COMPLAINT);
+export const requestEditComplaint = createAction('REQUEST_EDIT_COMPLAINT', payload => payload, () => ({ retry: true }));
 export const requestEditComplaintSuccess = createAction(REQUEST_EDIT_COMPLAINT_SUCCESS);
 export const requestEditComplaintFailed = createAction(REQUEST_EDIT_COMPLAINT_FAILED);
 

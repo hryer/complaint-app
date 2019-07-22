@@ -55,10 +55,10 @@ class AddComplaint extends React.PureComponent {
 
   componentDidMount() {
     this.state.token = this.props.token;
-    const { isConnected, requestOwners } = this.props;
+    const { isConnected, requestGetOwners } = this.props;
 
     if (isConnected === true) {
-      requestOwners({
+      requestGetOwners({
         token: this.state.token
       });
     }
@@ -67,8 +67,8 @@ class AddComplaint extends React.PureComponent {
   }
 
   render() {
-    const { dataOwner } = this.props;
-    const { query } = this.state;
+    const { dataOwner, screenComponent } = this.props;
+    const { query, isEditable, customer_name, data } = this.state;
     const owners = this.findOwner(query);
     const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
 
@@ -84,7 +84,11 @@ class AddComplaint extends React.PureComponent {
               </NB.Button>
             </NB.Left>
             <NB.Body>
-              <NB.Title>{this.props.screenComponent}</NB.Title>
+              {
+                (screenComponent === 'Detail Complaint' && isEditable === false) 
+                ? <NB.Title>Edit Complaint</NB.Title>
+                : <NB.Title>{screenComponent}</NB.Title>
+              }
             </NB.Body>
             <NB.Right />
           </NB.Header>
@@ -93,193 +97,222 @@ class AddComplaint extends React.PureComponent {
             <NB.Form>
               <NB.Item stackedLabel>
                 <NB.Label>Pilih Customer :</NB.Label>
-                {/* <NB.Input
-                value={this.state.data.user_id}
-                onChangeText={value => this.setInput('user_id', value)}
-              /> */}
-                <RN.View style={styles.autocompleteContainer}>
-                  <Autocomplete
-                    containerStyle={styles.autocompleteInput}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    data={owners.length === 1 && comp(query, owners[0].name) ? [] : owners}
-                    defaultValue={query}
-                    onChangeText={value => this.setInput('query', value)}
-                    renderItem={({ item, i }) => (
-                      <RN.TouchableOpacity onPress={
-                        () => {
-                          this.setInput('query', item.name);
-                          this.setInput('user_id', item.id);
-                        }
-                      }>
-                        <NB.Text style={styles.autocompleteList}>{item.name}</NB.Text>
-                      </RN.TouchableOpacity>
-                    )}
-                    keyExtractor={item => item.id.toString()}
-                  />
-                </RN.View>
-
+                {
+                  !isEditable
+                    ? <NB.Input editable={isEditable}>{customer_name}</NB.Input>
+                    : <RN.View style={styles.autocompleteContainer}>
+                      <Autocomplete
+                        containerStyle={styles.autocompleteInput}
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        data={owners.length === 1 && comp(query, owners[0].name) ? [] : owners}
+                        defaultValue={query}
+                        onChangeText={value => this.setInput('query', value)}
+                        renderItem={({ item, i }) => (
+                          <RN.TouchableOpacity onPress={
+                            () => {
+                              this.setInput('query', item.name);
+                              this.setInput('user_id', item.id);
+                            }
+                          }>
+                            <NB.Text style={styles.autocompleteList}>{item.name}</NB.Text>
+                          </RN.TouchableOpacity>
+                        )}
+                        keyExtractor={item => item.id.toString()}
+                      />
+                    </RN.View>
+                }
               </NB.Item>
 
               <NB.Item stackedLabel>
                 <NB.Label>Masukan Kode Barcode Produk :</NB.Label>
                 <NB.Input
-                  value={this.state.data.feeder_barcode}
+                  value={data.feeder_barcode}
                   onChangeText={value => this.setInput('feeder_barcode', value)}
+                  editable={isEditable}
                 />
               </NB.Item>
 
               <NB.Item stackedLabel>
                 <NB.Label>Pilih Kategori :</NB.Label>
-                <NB.Item picker>
-                  <NB.Picker
-                    mode="dropdown"
-                    iosIcon={<NB.Icon name="arrow-down" />}
-                    style={{ width: undefined }}
-                    placeholder="Pilih kategori"
-                    placeholderStyle={{ color: "#bfc6ea" }}
-                    placeholderIconColor="#039978"
-                    selectedValue={this.state.data.category}
-                    onValueChange={value => this.setInput('category', value)}
-                  >
-                    <NB.Picker.Item label="Hardware" value="hardware" />
-                    <NB.Picker.Item label="Software" value="software" />
-                  </NB.Picker>
-                </NB.Item>
+                {
+                  !isEditable
+                    ? <NB.Input editable={isEditable}>{data.category}</NB.Input>
+                    : <NB.Item picker>
+                      <NB.Picker
+                        mode="dropdown"
+                        iosIcon={<NB.Icon name="arrow-down" />}
+                        style={{ width: undefined }}
+                        placeholder="Pilih kategori"
+                        placeholderStyle={{ color: "#bfc6ea" }}
+                        placeholderIconColor="#039978"
+                        selectedValue={data.category}
+                        onValueChange={value => this.setInput('category', value)}
+                        editable={isEditable}
+                      >
+                        <NB.Picker.Item label="Hardware" value="hardware" />
+                        <NB.Picker.Item label="Software" value="software" />
+                      </NB.Picker>
+                    </NB.Item>
+                }
               </NB.Item>
 
               <NB.Item stackedLabel>
                 <NB.Label>Pilih Sub-Kategori :</NB.Label>
-                <NB.Item picker>
-                  <NB.Picker
-                    mode="dropdown"
-                    iosIcon={<NB.Icon name="arrow-down" />}
-                    style={{ width: undefined }}
-                    placeholder="Pilih kategori"
-                    placeholderStyle={{ color: "#bfc6ea" }}
-                    placeholderIconColor="#039978"
-                    selectedValue={this.state.data.subcategory}
-                    onValueChange={value => this.setInput('subcategory', value)}
-                  >
-                    <NB.Picker.Item label="Container" value="container" />
-                    <NB.Picker.Item label="Feeder" value="feeder" />
-                    <NB.Picker.Item label="Control Box" value="control box" />
-                    <NB.Picker.Item label="Apps" value="apps" />
-                    <NB.Picker.Item label="Dashboard" value="dashboard" />
-                    <NB.Picker.Item label="Lainnya" value="lainnya" />
-                  </NB.Picker>
-                </NB.Item>
+                {
+                  !isEditable
+                    ? <NB.Input editable={isEditable}>{data.subcategory}</NB.Input>
+                    : <NB.Item picker>
+                      <NB.Picker
+                        mode="dropdown"
+                        iosIcon={<NB.Icon name="arrow-down" />}
+                        style={{ width: undefined }}
+                        placeholder="Pilih kategori"
+                        placeholderStyle={{ color: "#bfc6ea" }}
+                        placeholderIconColor="#039978"
+                        selectedValue={data.subcategory}
+                        onValueChange={value => this.setInput('subcategory', value)}
+                      >
+                        <NB.Picker.Item label="Container" value="container" />
+                        <NB.Picker.Item label="Feeder" value="feeder" />
+                        <NB.Picker.Item label="Control Box" value="control box" />
+                        <NB.Picker.Item label="Apps" value="apps" />
+                        <NB.Picker.Item label="Dashboard" value="dashboard" />
+                        <NB.Picker.Item label="Lainnya" value="lainnya" />
+                      </NB.Picker>
+                    </NB.Item>
+                }
               </NB.Item>
 
               <NB.Item stackedLabel>
                 <NB.Label>Pilih Status :</NB.Label>
-                <NB.Item picker>
-                  <NB.Picker
-                    mode="dropdown"
-                    iosIcon={<NB.Icon name="arrow-down" />}
-                    style={{ width: undefined }}
-                    placeholder="Pilih kategori"
-                    placeholderStyle={{ color: "#bfc6ea" }}
-                    placeholderIconColor="#039978"
-                    selectedValue={this.state.data.status}
-                    onValueChange={value => this.setInput('status', value)}
-                  >
-                    <NB.Picker.Item label="Open" value="open" />
-                    <NB.Picker.Item label="Resolved" value="resolved" />
-                    <NB.Picker.Item label="Unresolved" value="unresolved" />
-                    <NB.Picker.Item label="Pending" value="pending" />
-                    <NB.Picker.Item label="Invalid" value="invalid" />
-                  </NB.Picker>
-                </NB.Item>
+                {
+                  !isEditable
+                    ? <NB.Input editable={isEditable}>{data.status}</NB.Input>
+                    : <NB.Item picker>
+                      <NB.Picker
+                        mode="dropdown"
+                        iosIcon={<NB.Icon name="arrow-down" />}
+                        style={{ width: undefined }}
+                        placeholder="Pilih kategori"
+                        placeholderStyle={{ color: "#bfc6ea" }}
+                        placeholderIconColor="#039978"
+                        selectedValue={data.status}
+                        onValueChange={value => this.setInput('status', value)}
+                      >
+                        <NB.Picker.Item label="Open" value="open" />
+                        <NB.Picker.Item label="Resolved" value="resolved" />
+                        <NB.Picker.Item label="Unresolved" value="unresolved" />
+                        <NB.Picker.Item label="Pending" value="pending" />
+                        <NB.Picker.Item label="Invalid" value="invalid" />
+                      </NB.Picker>
+                    </NB.Item>
+                }
               </NB.Item>
 
               <NB.Item stackedLabel>
                 <NB.Label>Komplain :</NB.Label>
                 <NB.Input
-                  value={this.state.data.complaint}
+                  value={data.complaint}
                   onChangeText={value => this.setInput('complaint', value)}
+                  editable={isEditable}
                 />
               </NB.Item>
 
               <NB.Item stackedLabel>
                 <NB.Label>Tipe Komplain :</NB.Label>
-                <NB.Item picker>
-                  <NB.Picker
-                    mode="dropdown"
-                    iosIcon={<NB.Icon name="arrow-down" />}
-                    style={{ width: undefined }}
-                    placeholder="Select your SIM"
-                    placeholderStyle={{ color: "#bfc6ea" }}
-                    placeholderIconColor="#039978"
-                    selectedValue={this.state.data.complaint_type}
-                    onValueChange={value => this.setInput('complaint_type', value)}
-                  >
-                    <NB.Picker.Item label="Failure" value="failure" />
-                    <NB.Picker.Item label="Complaint" value="complaint" />
-                    <NB.Picker.Item label="Maintenance" value="maintenance" />
-                    <NB.Picker.Item label="Etc" value="etc" />
-                  </NB.Picker>
-                </NB.Item>
+                {
+                  !isEditable
+                    ? <NB.Input editable={isEditable}>{data.complaint_type}</NB.Input>
+                    : <NB.Item picker>
+                      <NB.Picker
+                        mode="dropdown"
+                        iosIcon={<NB.Icon name="arrow-down" />}
+                        style={{ width: undefined }}
+                        placeholder="Select your SIM"
+                        placeholderStyle={{ color: "#bfc6ea" }}
+                        placeholderIconColor="#039978"
+                        selectedValue={data.complaint_type}
+                        onValueChange={value => this.setInput('complaint_type', value)}
+                      >
+                        <NB.Picker.Item label="Failure" value="failure" />
+                        <NB.Picker.Item label="Complaint" value="complaint" />
+                        <NB.Picker.Item label="Maintenance" value="maintenance" />
+                        <NB.Picker.Item label="Etc" value="etc" />
+                      </NB.Picker>
+                    </NB.Item>
+                }
               </NB.Item>
 
               <NB.Item stackedLabel>
                 <NB.Label>Penyebab :</NB.Label>
                 <NB.Input
-                  value={this.state.data.cause}
+                  value={data.cause}
                   onChangeText={value => this.setInput('cause', value)}
+                  editable={isEditable}
                 />
               </NB.Item>
 
               <NB.Item stackedLabel>
                 <NB.Label>Solusi :</NB.Label>
                 <NB.Input
-                  value={this.state.data.troubleshoot}
+                  value={data.troubleshoot}
                   onChangeText={value => this.setInput('troubleshoot', value)}
+                  editable={isEditable}
                 />
               </NB.Item>
 
               <NB.Item stackedLabel>
                 <NB.Label>Sumber :</NB.Label>
                 <NB.Input
-                  value={this.state.data.source}
+                  value={data.source}
                   onChangeText={value => this.setInput('source', value)}
+                  editable={isEditable}
                 />
               </NB.Item>
 
               <NB.Item stackedLabel>
                 <NB.Label>Tanggal Kejadian :</NB.Label>
-                <NB.DatePicker
-                  defaultDate={new Date()}
-                  maximumDate={new Date()}
-                  locale={"id"}
-                  timeZoneOffsetInMinutes={undefined}
-                  modalTransparent={false}
-                  animationType={"fade"}
-                  androidMode={"default"}
-                  placeHolderText="Pilih Tanggal"
-                  textStyle={{ color: "green" }}
-                  placeHolderTextStyle={{ color: "#d3d3d3" }}
-                  onDateChange={value => this.setInput('issued_at', value)}
-                  disabled={false}
-                />
+                {
+                  !isEditable
+                    ? <NB.Input editable={isEditable}>{data.issued_at}</NB.Input>
+                    : <NB.DatePicker
+                      defaultDate={new Date()}
+                      maximumDate={new Date()}
+                      locale={"id"}
+                      timeZoneOffsetInMinutes={undefined}
+                      modalTransparent={false}
+                      animationType={"fade"}
+                      androidMode={"default"}
+                      placeHolderText="Pilih Tanggal"
+                      textStyle={{ color: "green" }}
+                      placeHolderTextStyle={{ color: "#d3d3d3" }}
+                      onDateChange={value => this.setInput('issued_at', value)}
+                      disabled={false}
+                    />
+                }
               </NB.Item>
 
               <NB.Item stackedLabel>
                 <NB.Label>Tanggal Diselesaikan :</NB.Label>
-                <NB.DatePicker
-                  defaultDate={new Date()}
-                  maximumDate={new Date()}
-                  locale={"id"}
-                  timeZoneOffsetInMinutes={undefined}
-                  modalTransparent={false}
-                  animationType={"fade"}
-                  androidMode={"default"}
-                  placeHolderText="Pilih Tanggal"
-                  textStyle={{ color: "green" }}
-                  placeHolderTextStyle={{ color: "#d3d3d3" }}
-                  onDateChange={value => this.setInput('resolved_at', value)}
-                  disabled={false}
-                />
+                {
+                  !isEditable
+                    ? <NB.Input editable={isEditable}>{data.issued_at}</NB.Input>
+                    : <NB.DatePicker
+                      defaultDate={new Date()}
+                      maximumDate={new Date()}
+                      locale={"id"}
+                      timeZoneOffsetInMinutes={undefined}
+                      modalTransparent={false}
+                      animationType={"fade"}
+                      androidMode={"default"}
+                      placeHolderText="Pilih Tanggal"
+                      textStyle={{ color: "green" }}
+                      placeHolderTextStyle={{ color: "#d3d3d3" }}
+                      onDateChange={value => this.setInput('resolved_at', value)}
+                      disabled={false}
+                    />
+                }
               </NB.Item>
 
               <NB.Item stackedLabel>
@@ -287,6 +320,7 @@ class AddComplaint extends React.PureComponent {
                 <NB.Input
                   value={this.state.data.fo}
                   onChangeText={value => this.setInput('fo', value)}
+                  editable={isEditable}
                 />
               </NB.Item>
 
@@ -295,16 +329,25 @@ class AddComplaint extends React.PureComponent {
                 <NB.Input
                   value={this.state.data.cr}
                   onChangeText={value => this.setInput('cr', value)}
+                  editable={isEditable}
                 />
               </NB.Item>
 
-              <NB.Button
-                block
-                style={{ margin: 15 }}
-                onPress={this.onSubmit}
-              >
-                <NB.Text>Save</NB.Text>
-              </NB.Button>
+              {
+                !isEditable
+                ? <NB.Button block style={{ margin: 15 }}
+                onPress={() => this.setInput('isEditable', true)}>
+                  <NB.Text>Edit</NB.Text>
+                </NB.Button>
+                : <NB.Button
+                    block
+                    style={{ margin: 15 }}
+                    onPress={this.onSubmit}
+                  >
+                    <NB.Text>Save</NB.Text>
+                </NB.Button>
+              }
+              
             </NB.Form>
           </NB.Content>
         </NB.Container>
@@ -313,36 +356,38 @@ class AddComplaint extends React.PureComponent {
   }
 
   getInitialData = () => {
-    if(this.props.screenComponent === 'Detail Complaint') {
+    if (this.props.screenComponent === 'Detail Complaint') {
       const {
         customer,
-        feeder_barcode, 
-        category, subcategory, 
-        complaint, complaint_type, 
-        cause, troubleshoot, status, 
+        feeder_barcode,
+        category, subcategory,
+        complaint, complaint_type,
+        cause, troubleshoot, status,
         source, issued_at, resolved_at,
-        cr, fo, id 
+        cr, fo, id
       } = this.props.detailData;
 
       this.setState(prevState => ({
         ...prevState,
         complaint_id: id,
-        data: { 
+        customer_name: customer.name,
+        isEditable: false,
+        data: {
           ...prevState.data,
-            user_id: customer.id,
-            feeder_barcode: feeder_barcode,
-            category: category,
-            subcategory: subcategory,
-            complaint: complaint,
-            complaint_type: complaint_type,
-            cause: cause,
-            troubleshoot: troubleshoot,
-            status: status,
-            source: source,
-            issued_at: issued_at,
-            resolved_at: resolved_at,
-            cr:cr,
-            fo:fo
+          user_id: customer.id,
+          feeder_barcode: feeder_barcode,
+          category: category,
+          subcategory: subcategory,
+          complaint: complaint,
+          complaint_type: complaint_type,
+          cause: cause,
+          troubleshoot: troubleshoot,
+          status: status,
+          source: source,
+          issued_at: issued_at,
+          resolved_at: resolved_at,
+          cr: cr,
+          fo: fo
         }
       }));
     }
@@ -353,10 +398,11 @@ class AddComplaint extends React.PureComponent {
   }
 
   setInput = (name, value) => {
-    if (name === 'query') {
-      this.setState({
+    if (name === 'query' || name === 'token' || name === 'isEditable') {
+      this.setState(prevState => ({
+        ...prevState,
         [name]: value
-      });
+      }));
     } else {
       if (name === 'issued_at' || name === 'resolved_at') {
         value = moment(value).format('YYYY-MM-DD');
@@ -375,18 +421,17 @@ class AddComplaint extends React.PureComponent {
     if (query === '') {
       return [];
     }
-
     const { dataOwner } = this.props;
     const regex = new RegExp(`${query.trim()}`, 'i');
     return dataOwner.filter(dataOwner => dataOwner.name.search(regex) >= 0);
   }
+
   onSubmit = () => {
-    if(this.props.screenComponent === 'Add Complaint'){
+    if (this.props.screenComponent === 'Add Complaint') {
       this.props.requestAddComplaint(this.state);
-    }else {
+    } else {
       this.props.requestEditComplaint(this.state);
     }
-      
   }
 }
 

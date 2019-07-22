@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 
 import AddComplaint from '../../components/complaints/Add';
 import { requestEditComplaint, resetRequestComplaints } from 'actions/complaints';
-import { requestOwners, resetRequestOwners } from 'actions/owners';
+import { requestGetOwners, resetRequestOwners } from 'actions/owners';
 import { requestLogout } from 'actions/auth';
 
 const mapStateToProps = (state) => {
@@ -55,7 +55,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   requestEditComplaint, resetRequestComplaints,
-  requestOwners, resetRequestOwners,
+  requestGetOwners, resetRequestOwners,
   requestLogout
 };
 
