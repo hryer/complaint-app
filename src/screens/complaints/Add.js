@@ -15,6 +15,7 @@ const mapStateToProps = (state) => {
   let token = '';
   let errPostData = ''; 
   let dataOwner = null;
+  let screenComponent = 'Add Complaint';
 
   if(state.auth.data != null && state.auth.data != undefined) {
     token = state.auth.data.token;
@@ -35,6 +36,7 @@ const mapStateToProps = (state) => {
     actionQueue,
     token,
     dataOwner,
+    screenComponent
     // errPostData
   };
 };

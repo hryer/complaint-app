@@ -33,21 +33,3 @@ export const requestEditComplaintSuccess = createAction(REQUEST_EDIT_COMPLAINT_S
 export const requestEditComplaintFailed = createAction(REQUEST_EDIT_COMPLAINT_FAILED);
 
 export const syncConnection = createAction(offlineActionTypes.CONNECTION_CHANGE);
-
-/*
-const updateAdminUser = createAction(
-  'UPDATE_ADMIN_USER',
-  updates => updates,
-  () => ({ admin: true })
-);
-
-updateAdminUser({ name: 'Foo' });
-
-export const subOne = () => ({
-  type: 'SUB_ONE',
-  payload: getUUID(),
-  meta: {
-    retry: true,
-  },
-});
-*/

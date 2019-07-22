@@ -29,9 +29,27 @@ class AddComplaint extends React.PureComponent {
   constructor() {
     super();
     this.state = {
-      data: this.getInitialData,
+      data: {
+        user_id: '',
+        feeder_barcode: '',
+        category: '',
+        subcategory: '',
+        complaint: '',
+        complaint_type: '',
+        cause: '',
+        troubleshoot: '',
+        status: '',
+        source: '',
+        issued_at: moment().format('YYYY-MM-DD'),
+        resolved_at: moment().format('YYYY-MM-DD'),
+        cr: '',
+        fo: ''
+      },
       token: '',
-      query: ''
+      query: '',
+      isEditable: true,
+      customer_name: '',
+      complaint_id: ''
     }
   }
 
@@ -44,6 +62,8 @@ class AddComplaint extends React.PureComponent {
         token: this.state.token
       });
     }
+
+    this.getInitialData();
   }
 
   render() {
@@ -64,7 +84,7 @@ class AddComplaint extends React.PureComponent {
               </NB.Button>
             </NB.Left>
             <NB.Body>
-              <NB.Title>Add Complaint</NB.Title>
+              <NB.Title>{this.props.screenComponent}</NB.Title>
             </NB.Body>
             <NB.Right />
           </NB.Header>
@@ -283,7 +303,7 @@ class AddComplaint extends React.PureComponent {
                 style={{ margin: 15 }}
                 onPress={this.onSubmit}
               >
-                <NB.Text>Submit</NB.Text>
+                <NB.Text>Save</NB.Text>
               </NB.Button>
             </NB.Form>
           </NB.Content>
@@ -293,21 +313,38 @@ class AddComplaint extends React.PureComponent {
   }
 
   getInitialData = () => {
-    return {
-      user_id: '',
-      feeder_barcode: '00001-AL03005090R-SMIT',
-      category: '',
-      subcategory: '',
-      complaint: '',
-      complaint_type: '',
-      cause: '',
-      troubleshoot: '',
-      status: '',
-      source: '',
-      issued_at: moment().format('YYYY-MM-DD'),
-      resolved_at: moment().format('YYYY-MM-DD'),
-      cr: '',
-      fo: ''
+    if(this.props.screenComponent === 'Detail Complaint') {
+      const {
+        customer,
+        feeder_barcode, 
+        category, subcategory, 
+        complaint, complaint_type, 
+        cause, troubleshoot, status, 
+        source, issued_at, resolved_at,
+        cr, fo, id 
+      } = this.props.detailData;
+
+      this.setState(prevState => ({
+        ...prevState,
+        complaint_id: id,
+        data: { 
+          ...prevState.data,
+            user_id: customer.id,
+            feeder_barcode: feeder_barcode,
+            category: category,
+            subcategory: subcategory,
+            complaint: complaint,
+            complaint_type: complaint_type,
+            cause: cause,
+            troubleshoot: troubleshoot,
+            status: status,
+            source: source,
+            issued_at: issued_at,
+            resolved_at: resolved_at,
+            cr:cr,
+            fo:fo
+        }
+      }));
     }
   }
 
@@ -325,6 +362,7 @@ class AddComplaint extends React.PureComponent {
         value = moment(value).format('YYYY-MM-DD');
       }
       this.setState({
+        ...this.state,
         data: {
           ...this.state.data,
           [name]: value
@@ -343,7 +381,12 @@ class AddComplaint extends React.PureComponent {
     return dataOwner.filter(dataOwner => dataOwner.name.search(regex) >= 0);
   }
   onSubmit = () => {
-    this.props.requestAddComplaint(this.state);
+    if(this.props.screenComponent === 'Add Complaint'){
+      this.props.requestAddComplaint(this.state);
+    }else {
+      this.props.requestEditComplaint(this.state);
+    }
+      
   }
 }
 

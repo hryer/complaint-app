@@ -24,6 +24,7 @@ export const complaints = (state = initialState, action) => {
     }
     case REQUEST_COMPLAINTS: {
       return {
+        ...state,
         message: 'Getting complaints...',
         isError: false,
         errData: null
@@ -31,6 +32,7 @@ export const complaints = (state = initialState, action) => {
     }
     case REQUEST_COMPLAINTS_SUCCESS: {
       return {
+        ...state,
         data: action.data,
         message: 'Complaints has been received',
         isError: false,
@@ -39,6 +41,7 @@ export const complaints = (state = initialState, action) => {
     }
     case REQUEST_COMPLAINTS_FAILED: {
       return {
+        ...state,
         errData: action.errData,
         message: action.errData.message,
         isError: true
@@ -72,6 +75,7 @@ export const complaints = (state = initialState, action) => {
     }
     case REQUEST_DETAIL_COMPLAINT: {
       return {
+        ...state,
         message: 'get detail complaint...',
         isError: false,
         errData: null
@@ -79,6 +83,7 @@ export const complaints = (state = initialState, action) => {
     }
     case REQUEST_DETAIL_COMPLAINT_SUCCESS: {
       return {
+        ...state,
         message: 'get detail complaint success',
         detailData: action.data,
         isError: false,
@@ -87,6 +92,7 @@ export const complaints = (state = initialState, action) => {
     }
     case REQUEST_DETAIL_COMPLAINT_FAILED: {
       return {
+        ...state,
         message: 'get detail complaint failed',
         isError: true,
         errData: action.errData

@@ -4,7 +4,8 @@ import * as Types from 'actions/types';
 import { getAuth, logoutAuth } from './auth';
 import { 
   getComplaints, postComplaint,
-  getDetailComplaint
+  getDetailComplaint,
+  putComplaint
 } from './complaints';
 import { getOwners } from './owners';
 
@@ -16,6 +17,7 @@ export default function* watchSagas() {
     takeEvery(Types.REQUEST_ADD_COMPLAINT,postComplaint),
     takeEvery(Types.REQUEST_OWNERS,getOwners),
     takeEvery(Types.REQUEST_DETAIL_COMPLAINT,getDetailComplaint),
+    takeEvery(Types.REQUEST_EDIT_COMPLAINT,putComplaint),
     fork(networkSaga, { pingInterval: 20000 }),
   ]);
 }

@@ -20,7 +20,6 @@ class List extends React.PureComponent {
       NavigationService.navigate('Login');
     }
     this.getData();
-    console.log(this.props.data);
   }
 
   render() {
@@ -84,7 +83,7 @@ class List extends React.PureComponent {
 
   getDetailData = async (complaint_id) => {
     const { requestDetailComplaint, isConnected, authData } = this.props;
-    console.log(`get detail data ${complaint_id}`);
+
     if (isConnected === true && authData != null && authData != undefined) {
       await requestDetailComplaint({
         token: authData.token,

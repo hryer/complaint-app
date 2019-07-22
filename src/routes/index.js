@@ -3,14 +3,13 @@ import Login from 'src/screens/Login';
 import ListComplaints from 'src/screens/complaints/List';
 import DetailComplaint from 'src/screens/complaints/Detail';
 import AddComplaint from 'src/screens/complaints/Add';
-import EditComplaint from 'src/screens/complaints/Edit';
 
 const AppNavigator = createStackNavigator(
   {
     Login: Login,
     Complaints: ListComplaints,
     AddComplaint: AddComplaint,
-    // DetailComplaint: DetailComplaint,
+    DetailComplaint: DetailComplaint,
     // EditComplaint: EditComplaint
   },
   {

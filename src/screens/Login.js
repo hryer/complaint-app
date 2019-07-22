@@ -8,7 +8,6 @@ import { requestLogin, resetRequestAuth } from 'actions/auth';
 const mapStateToProps = ( state ) => {
   const { message, isError, isLoggedIn, data } = state.auth;
   const { isConnected } = state.network;
-
   return {
     isError,
     message,

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { urlComplaints } from '../config';
 
-export const requestComplaints = (payload) => {
+export const requestGetComplaints = (payload) => {
   let config = {
     headers: {
       'Content-Type': 'application/json',
@@ -49,7 +49,6 @@ export const requestAddComplaint = (payload) => {
 }
 
 export const requestDetailComplaint = (payload) => {
-  // http://staging.dash-api.efishery.com/complaint/complaint_id GET
   let config = {
     headers: {
       'Content-Type': 'multipart/form-data',
@@ -69,6 +68,23 @@ export const requestDetailComplaint = (payload) => {
 }
 
 export const requestEditComplaint = (payload) => {
-  // http://staging.dash-api.efishery.com/complaint/complaint_id PUT
-  return null;
+  let config = {
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Api-Version': '1',
+      'x-app-token': payload.token
+    }
+  };
+
+  const urlEditComplaint = `${urlComplaints}/${payload.complaint_id}`; 
+  let temp = payload.data.subcategory;
+  payload.data.subcategory = [];
+  payload.data.subcategory.push(temp);
+
+  return axios.put(urlEditComplaint, payload.data, config)
+    .then(function (response) {
+      return response;
+    }).catch(function (error) {
+      return error;
+    });
 }

@@ -1,36 +1,62 @@
-// import React from 'react';
-// import RN from 'react-native';
-// import { connect } from 'react-redux';
+/*
+  DETAIL DATA -> 
+  USER BUKA LIST -> USER KLIK MAKA DIA AKAN NGE CALL REQUESTDETAIL DGN ID COMPLAINT 
+  -> navigation ke hal detail which is screen detail
+*/
 
-// import DetailComplaint from '../../components/complaints/detail';
-// import { requestDetailComplaint, resetRequestComplaints, syncConnection } from 'actions/complaints';
-// import { requestLogout } from 'actions/auth';
+import React from 'react';
+import RN from 'react-native';
+import { connect } from 'react-redux';
 
-// const mapStateToProps = (state) => {
-//   const { isLoggedIn } = state.auth;
-//   const authData = state.auth.data;
-//   const { detailData, isError, message } = state.complaints;
+import AddComplaint from '../../components/complaints/Add';
+import { requestEditComplaint, resetRequestComplaints } from 'actions/complaints';
+import { requestOwners, resetRequestOwners } from 'actions/owners';
+import { requestLogout } from 'actions/auth';
 
-//   const { isConnected, actionQueue } = state.network;
+const mapStateToProps = (state) => {
+  const { isLoggedIn } = state.auth;
 
-//   return {
-//     isLoggedIn,
-//     authData,
-//     data,
-//     isError,
-//     isConnected,
-//     actionQueue,
-//     message
-//   };
-// };
+  const { isConnected, actionQueue } = state.network;
 
-// const mapDispatchToProps = { requestComplaints, resetRequestComplaints, requestLogout, syncConnection };
+  let token = '';
+  // let errPostData = '';
+  let dataOwner = null;
+  let detailData = null;
+  const screenComponent = 'Detail Complaint';
 
-// export default connect(mapStateToProps, mapDispatchToProps)(DetailComplaint);
+  if (state.auth.data != null && state.auth.data != undefined) {
+    token = state.auth.data.token;
+  }
 
+  if (state.owners.dataOwner != null && state.owners.dataOwner) {
+    dataOwner = state.owners.dataOwner;
+  }
 
-// /*
-//   DETAIL DATA -> 
-//   USER BUKA LIST -> USER KLIK MAKA DIA AKAN NGE CALL REQUESTDETAIL DGN ID COMPLAINT 
-//   -> navigation ke hal detail which is screen detail
-// */
+  if(state.complaints.detailData != null && state.complaints.detailData != undefined) {
+    detailData = state.complaints.detailData;
+  }
+  /*
+    TODO:: errPostData -> message for error when add complaint
+    if(state.complaints.errPostData != undefined){
+      errPostData = state.complaints.errPostData;
+    }
+  */
+  return {
+    isLoggedIn,
+    isConnected,
+    actionQueue,
+    token,
+    dataOwner,
+    detailData,
+    screenComponent,
+    // errPostData
+  };
+};
+
+const mapDispatchToProps = {
+  requestEditComplaint, resetRequestComplaints,
+  requestOwners, resetRequestOwners,
+  requestLogout
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddComplaint);
