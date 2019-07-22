@@ -1,32 +1,29 @@
 import React from 'react';
 import RN from 'react-native';
-import * as NB from 'native-base';
+import { connect } from 'react-redux';
 
-export default class List extends React.PureComponent {
-  constructor() {
-    super();
-    this.state = {
-      email: '',
-      password: ''
-    };
-  }
+import List from '../../components/complaints/List';
+import { requestComplaints, resetRequestComplaints, syncConnection } from 'actions/complaints';
+import { requestLogout } from 'actions/auth';
 
+const mapStateToProps = (state) => {
+  const { isLoggedIn } = state.auth;
+  const authData = state.auth.data;
+  const { data, isError, message } = state.complaints;
 
-  render() {
-    return (
-      <NB.Container>
-        <NB.Header noLeft>
-          <NB.Left />
-          <NB.Body>
-            <NB.Title>List Complaint</NB.Title>
-          </NB.Body>
-          <NB.Right />
-        </NB.Header>
+  const { isConnected, actionQueue } = state.network;
 
-        <NB.Content>
-          <NB.Text>DAMN IT</NB.Text>
-        </NB.Content>
-      </NB.Container>
-    )
-  }
-}
+  return {
+    isLoggedIn,
+    authData,
+    data,
+    isError,
+    isConnected,
+    actionQueue,
+    message
+  };
+};
+
+const mapDispatchToProps = { requestComplaints, resetRequestComplaints, requestLogout, syncConnection };
+
+export default connect(mapStateToProps, mapDispatchToProps)(List);

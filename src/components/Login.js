@@ -4,6 +4,7 @@ import RN from 'react-native';
 
 import PropTypes from 'prop-types';
 import * as NB from 'native-base';
+import * as NavigationService from 'libs/navigation/NavigationServices.js'
 
 class Login extends React.Component {
   constructor() {
@@ -15,45 +16,18 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
-    this.props.resetRequest();
-    this.setState({
-      email: '',
-      password: '',
-    });
-    console.log('did mount');
-  }
-
-  componentWillUpdate() {
-    console.log('will update');
-  }
-
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-    console.log('willReceive')
-    if (this.state.email !== '' && nextProps.email === '' || this.state.email == undefined) {
+    if (this.props.data === null && this.props.data === undefined) {
+      this.props.resetRequestAuth();
       this.setState({
         email: '',
         password: '',
-      })
+      });
     }
   }
 
-  setInput = (name, value) => {
-    this.setState({
-      ...this.state.input,
-      [name]: value,
-    });
-  }
-
-  submit = () => {
-    const { requestLogin } = this.props;
-    const { email, password } = this.state;
-    console.log(this.props)
-    requestLogin({email, password});
-  }
-  
   render() {
-    const { message, isError } = this.props;
+    const { message, isError, data, isLoggedIn } = this.props;
+
     return (
       <NB.Container>
         <NB.Header noLeft>
@@ -63,42 +37,74 @@ class Login extends React.Component {
           </NB.Body>
           <NB.Right />
         </NB.Header>
-
         <NB.Content>
-          <NB.Form>
-            <NB.Item stackedLabel>
-              <NB.Label>Email eFishery :</NB.Label>
-              <NB.Input
-                value={this.state.email}
-                onChangeText={value => this.setInput('email', value)}
-              />
-            </NB.Item>
-            <NB.Item stackedLabel>
-              <NB.Label>Password :</NB.Label>
-              <NB.Input
-                value={this.state.password}
-                onChangeText={value => this.setInput('password', value)}
-              />
-            </NB.Item>
-          </NB.Form>
-          <NB.Text>{message}</NB.Text>
-          <NB.Button
-            block
-            onPress={this.submit}
-            style={{ margin: 15 }}
-          >
-            <NB.Text>Submit</NB.Text>
-          </NB.Button>
+          {isLoggedIn ?
+            (
+              <NB.Button
+                block
+                onPress={this.autoLogin}
+                style={{ margin: 15 }}
+              >
+                <NB.Text>Re-Connect</NB.Text>
+              </NB.Button>
+            ) : (
+              <NB.Form>
+                <NB.Item floatingLabel>
+                  <NB.Label>Email eFishery :</NB.Label>
+                  <NB.Input
+                    value={this.state.email}
+                    onChangeText={value => this.setInput('email', value)}
+                  />
+                </NB.Item>
+                <NB.Item floatingLabel last>
+                  <NB.Label>Password :</NB.Label>
+                  <NB.Input
+                    value={this.state.password}
+                    onChangeText={value => this.setInput('password', value)}
+                  />
+                </NB.Item>
+
+                <NB.Text>{message}</NB.Text>
+                <NB.Button
+                  block
+                  onPress={this.submit}
+                  style={{ margin: 15 }}
+                >
+                  <NB.Text>Submit</NB.Text>
+                </NB.Button>
+              </NB.Form>
+            )
+          }
+
+
         </NB.Content>
       </NB.Container>
     );
   }
+
+  setInput = (name, value) => {
+    this.setState({
+      ...this.state,
+      [name]: value,
+    });
+  }
+
+  submit = () => {
+    const { requestLogin } = this.props;
+    const { email, password } = this.state;
+    requestLogin({ email, password });
+  }
+
+  autoLogin = () => {
+    NavigationService.navigate('Complaints');
+  }
 }
+
 
 Login.propTypes = {
   isError: PropTypes.bool.isRequired,
-  message: PropTypes.string.isRequired,
-  resetRequest: PropTypes.func.isRequired,
+  // message: PropTypes.string.isRequired,
+  // resetAuthRequest: PropTypes.func.isRequired,
   requestLogin: PropTypes.func.isRequired,
 };
 

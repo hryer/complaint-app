@@ -13,7 +13,6 @@ export const requestLogin = (payload) => {
     "email": payload.email,
     "password": payload.password
   }
-
   return axios.post(urlLogin, bodyParameters, config)
     .then(function (response) {
       return response.data
@@ -24,26 +23,26 @@ export const requestLogin = (payload) => {
 }
 
 export const requestLogout = (payload) => {
-  const urlAuthLogout = `${config.urlAuth}/logout`;
+  // const urlAuthLogout = `${config.urlAuth}/logout`;
 
-  var config = {
-    headers: {
-      'Content-Type': 'application/json',
-      'X-App-token': 'app_token',
-      'X-Api-Version': '1'
-    }
-  };
+  // var config = {
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     'X-App-token': 'app_token',
+  //     'X-Api-Version': '1'
+  //   }
+  // };
 
-  var bodyParameters = {
-    "email": payload.email,
-    "password": payload.password
-  }
+  // var bodyParameters = {
+  //   "email": payload.email,
+  //   "password": payload.password
+  // }
 
-  return axios.post(urlAuthLogout, bodyParameters, config)
-    .then(function (response) {
-      return response.data
-    })
-    .catch(function (error) {
-      return error
-    })
+  // return axios.post(urlAuthLogout, bodyParameters, config)
+  //   .then(function (response) {
+  //     return response.data
+  //   })
+  //   .catch(function (error) {
+  //     return error
+  //   })
 }
