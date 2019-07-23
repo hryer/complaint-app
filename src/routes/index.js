@@ -9,8 +9,7 @@ const AppNavigator = createStackNavigator(
     Login: Login,
     Complaints: ListComplaints,
     AddComplaint: AddComplaint,
-    DetailComplaint: DetailComplaint,
-    // EditComplaint: EditComplaint
+    DetailComplaint: DetailComplaint
   },
   {
     initialRouteName: "Login",

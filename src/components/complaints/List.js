@@ -1,5 +1,6 @@
 import React from 'react';
 import RN from 'react-native';
+import PropTypes from 'prop-types';
 import { checkInternetConnection, offlineActionTypes } from 'react-native-offline';
 import * as NB from 'native-base';
 import * as NavigationService from 'libs/navigation/NavigationServices.js'
@@ -133,6 +134,11 @@ class List extends React.PureComponent {
     });
   }
 }
+
+AddComplaint.propTypes = {
+  isError: PropTypes.bool.isRequired,
+  isConnected: PropTypes.bool.isRequired
+};
 
 export default List;
 

@@ -118,6 +118,7 @@ class Login extends React.Component {
 
 Login.propTypes = {
   isError: PropTypes.bool.isRequired,
+  isConnected: PropTypes.bool.isRequired,
   resetRequestAuth: PropTypes.func.isRequired,
   requestLogin: PropTypes.func.isRequired,
 };

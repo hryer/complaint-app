@@ -32,15 +32,10 @@ const mapStateToProps = (state) => {
     dataOwner = state.owners.dataOwner;
   }
 
-  if(state.complaints.detailData != null && state.complaints.detailData != undefined) {
+  if (state.complaints.detailData != null && state.complaints.detailData != undefined) {
     detailData = state.complaints.detailData;
   }
-  /*
-    TODO:: errPostData -> message for error when add complaint
-    if(state.complaints.errPostData != undefined){
-      errPostData = state.complaints.errPostData;
-    }
-  */
+
   return {
     isLoggedIn,
     isConnected,
@@ -48,8 +43,7 @@ const mapStateToProps = (state) => {
     token,
     dataOwner,
     detailData,
-    screenComponent,
-    // errPostData
+    screenComponent
   };
 };
 

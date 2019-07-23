@@ -10,14 +10,14 @@ export const requestGetOwners = (payload) => {
   };
 
   return axios.get(urlOwner, config)
-    .then(function(response) {
+    .then(function (response) {
       return response.data;
-    }).catch(function(error) {
+    }).catch(function (error) {
       return error;
     })
 }
 
-export const requestGetBarcode = (payload) => {
+export const requestGetBarcodes = (payload) => {
   let config = {
     headers: {
       'Content-Type': 'application/json',
@@ -26,10 +26,11 @@ export const requestGetBarcode = (payload) => {
   };
 
   const urlBarcode = `${urlFeeder}/${payload.user_id}/status/history`;
+
   return axios.get(urlFeeder, config)
-    .then(function(response) {
+    .then(function (response) {
       return response;
-    }).catch(function(error) {
+    }).catch(function (error) {
       return error;
     })
 }

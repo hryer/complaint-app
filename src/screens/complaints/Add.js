@@ -13,23 +13,18 @@ const mapStateToProps = (state) => {
   const { isConnected, actionQueue } = state.network;
 
   let token = '';
-  let errPostData = ''; 
+  let errPostData = '';
   let dataOwner = null;
   let screenComponent = 'Add Complaint';
 
-  if(state.auth.data != null && state.auth.data != undefined) {
+  if (state.auth.data != null && state.auth.data != undefined) {
     token = state.auth.data.token;
   }
 
-  if(state.owners.dataOwner != null && state.owners.dataOwner){
+  if (state.owners.dataOwner != null && state.owners.dataOwner) {
     dataOwner = state.owners.dataOwner;
   }
-  /*
-    TODO:: errPostData -> message for error when add complaint
-    if(state.complaints.errPostData != undefined){
-      errPostData = state.complaints.errPostData;
-    }
-  */
+
   return {
     isLoggedIn,
     isConnected,
@@ -37,11 +32,10 @@ const mapStateToProps = (state) => {
     token,
     dataOwner,
     screenComponent
-    // errPostData
   };
 };
 
-const mapDispatchToProps = { 
+const mapDispatchToProps = {
   requestAddComplaint, resetRequestComplaints,
   requestGetOwners, resetRequestOwners,
   requestLogout

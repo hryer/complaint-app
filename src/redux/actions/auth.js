@@ -6,7 +6,7 @@ import {
   RESET_REQUEST_AUTH
 } from './types';
 
-export const resetRequestAuth= createAction(RESET_REQUEST_AUTH);
+export const resetRequestAuth = createAction(RESET_REQUEST_AUTH);
 
 export const requestLogin = createAction(REQUEST_LOGIN);
 export const requestLoginFailed = createAction(REQUEST_LOGIN_FAILED);

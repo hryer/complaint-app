@@ -3,7 +3,7 @@ import RN from 'react-native';
 import { connect } from 'react-redux';
 
 import List from '../../components/complaints/List';
-import { 
+import {
   syncConnection,
   requestComplaints, resetRequestComplaints,
   requestDetailComplaint,

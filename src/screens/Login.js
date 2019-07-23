@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Login from 'components/Login';
 import { requestLogin, resetRequestAuth } from 'actions/auth';
 
-const mapStateToProps = ( state ) => {
+const mapStateToProps = (state) => {
   const { message, isError, isLoggedIn, data } = state.auth;
   const { isConnected } = state.network;
   return {

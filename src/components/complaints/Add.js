@@ -1,5 +1,6 @@
 import React from 'react';
 import RN from 'react-native';
+import PropTypes from 'prop-types';
 import * as NB from 'native-base';
 import * as NavigationService from 'libs/navigation/NavigationServices.js';
 import moment from 'moment';
@@ -55,7 +56,7 @@ class AddComplaint extends React.PureComponent {
 
   componentDidMount() {
     this.state.token = this.props.token;
-    const { isConnected, requestGetOwners } = this.props;
+    const { isConnected, requestGetOwners, screenComponent } = this.props;
 
     if (isConnected === true) {
       requestGetOwners({
@@ -63,7 +64,9 @@ class AddComplaint extends React.PureComponent {
       });
     }
 
-    this.getInitialData();
+    if (screenComponent === 'Detail Complaint') {
+      this.getInitialData();
+    }
   }
 
   render() {
@@ -85,9 +88,9 @@ class AddComplaint extends React.PureComponent {
             </NB.Left>
             <NB.Body>
               {
-                (screenComponent === 'Detail Complaint' && isEditable === false) 
-                ? <NB.Title>Edit Complaint</NB.Title>
-                : <NB.Title>{screenComponent}</NB.Title>
+                (screenComponent === 'Detail Complaint' && isEditable === false)
+                  ? <NB.Title>Edit Complaint</NB.Title>
+                  : <NB.Title>{screenComponent}</NB.Title>
               }
             </NB.Body>
             <NB.Right />
@@ -338,19 +341,19 @@ class AddComplaint extends React.PureComponent {
 
               {
                 !isEditable
-                ? <NB.Button block style={{ margin: 15 }}
-                onPress={() => this.setInput('isEditable', true)}>
-                  <NB.Text>Edit</NB.Text>
-                </NB.Button>
-                : <NB.Button
+                  ? <NB.Button block style={{ margin: 15 }}
+                    onPress={() => this.setInput('isEditable', true)}>
+                    <NB.Text>Edit</NB.Text>
+                  </NB.Button>
+                  : <NB.Button
                     block
                     style={{ margin: 15 }}
                     onPress={this.onSubmit}
                   >
                     <NB.Text>Save</NB.Text>
-                </NB.Button>
+                  </NB.Button>
               }
-              
+
             </NB.Form>
           </NB.Content>
         </NB.Container>
@@ -359,41 +362,39 @@ class AddComplaint extends React.PureComponent {
   }
 
   getInitialData = () => {
-    if (this.props.screenComponent === 'Detail Complaint') {
-      const {
-        customer,
-        feeder_barcode,
-        category, subcategory,
-        complaint, complaint_type,
-        cause, troubleshoot, status,
-        source, issued_at, resolved_at,
-        cr, fo, id
-      } = this.props.detailData;
+    const {
+      customer,
+      feeder_barcode,
+      category, subcategory,
+      complaint, complaint_type,
+      cause, troubleshoot, status,
+      source, issued_at, resolved_at,
+      cr, fo, id
+    } = this.props.detailData;
 
-      this.setState(prevState => ({
-        ...prevState,
-        complaint_id: id,
-        customer_name: customer.name,
-        isEditable: false,
-        data: {
-          ...prevState.data,
-          user_id: customer.id,
-          feeder_barcode: feeder_barcode,
-          category: category,
-          subcategory: subcategory,
-          complaint: complaint,
-          complaint_type: complaint_type,
-          cause: cause,
-          troubleshoot: troubleshoot,
-          status: status,
-          source: source,
-          issued_at: issued_at,
-          resolved_at: resolved_at,
-          cr: cr,
-          fo: fo
-        }
-      }));
-    }
+    this.setState(prevState => ({
+      ...prevState,
+      complaint_id: id,
+      customer_name: customer.name,
+      isEditable: false,
+      data: {
+        ...prevState.data,
+        user_id: customer.id,
+        feeder_barcode: feeder_barcode,
+        category: category,
+        subcategory: subcategory,
+        complaint: complaint,
+        complaint_type: complaint_type,
+        cause: cause,
+        troubleshoot: troubleshoot,
+        status: status,
+        source: source,
+        issued_at: issued_at,
+        resolved_at: resolved_at,
+        cr: cr,
+        fo: fo
+      }
+    }));
   }
 
   getLost = () => {
@@ -402,7 +403,6 @@ class AddComplaint extends React.PureComponent {
 
   setInput = (name, value) => {
     if (name === 'query' || name === 'token' || name === 'isEditable') {
-      console.log(value);
       this.setState({
         ...this.state,
         [name]: value
@@ -438,6 +438,11 @@ class AddComplaint extends React.PureComponent {
     }
   }
 }
+
+AddComplaint.propTypes = {
+  isError: PropTypes.bool.isRequired,
+  isConnected: PropTypes.bool.isRequired
+};
 
 export default AddComplaint;
 

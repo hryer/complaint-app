@@ -20,7 +20,7 @@ export const complaints = (state = initialState, action) => {
 
   switch (type) {
     case RESET_REQUEST_COMPLAINTS: {
-      return {...initialState};
+      return { ...initialState };
     }
     case REQUEST_COMPLAINTS: {
       return {
@@ -98,10 +98,7 @@ export const complaints = (state = initialState, action) => {
         errData: action.errData
       }
     }
-    /* TODO :: Make sure add complaint work with integration react native offline
-    Create reducer for edit complaint
-    */
     default:
-      return {...state};
+      return { ...state };
   }
 };

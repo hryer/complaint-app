@@ -55,12 +55,12 @@ export const auth = (state = initialState, action) => {
       };
     }
     case REQUEST_LOGOUT_SUCCESS: {
-      return {...initialState};
+      return { ...initialState };
     }
     case RESET_REQUEST_AUTH: {
-      return {...initialState};
+      return { ...initialState };
     }
     default:
-      return {...state};
+      return { ...state };
   }
 };
