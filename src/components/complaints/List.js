@@ -6,6 +6,7 @@ import * as NB from 'native-base';
 import * as NavigationService from 'libs/navigation/NavigationServices.js'
 import moment from 'moment';
 import Loading from '../Loading';
+
 const styles = RN.StyleSheet.create({
   fab: {
     backgroundColor: '#039978',
@@ -83,7 +84,7 @@ class List extends React.PureComponent {
   }
 
   getDetailData = async (complaint_id) => {
-    const { requestDetailComplaint, isConnectedf, authData } = this.props;
+    const { requestDetailComplaint, isConnected, authData } = this.props;
 
     if (isConnected === true && authData != null && authData != undefined) {
       await requestDetailComplaint({
@@ -135,7 +136,7 @@ class List extends React.PureComponent {
   }
 }
 
-AddComplaint.propTypes = {
+List.propTypes = {
   isError: PropTypes.bool.isRequired,
   isConnected: PropTypes.bool.isRequired
 };

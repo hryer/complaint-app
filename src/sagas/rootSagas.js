@@ -7,7 +7,7 @@ import {
   getDetailComplaint,
   putComplaint
 } from './complaints';
-import { getOwners } from './owners';
+import { getOwners, getBarcodes } from './owners';
 
 export default function* watchSagas() {
   yield all([
@@ -16,6 +16,7 @@ export default function* watchSagas() {
     takeEvery(Types.REQUEST_COMPLAINTS, getComplaints),
     takeEvery(Types.REQUEST_ADD_COMPLAINT, postComplaint),
     takeEvery(Types.REQUEST_GET_OWNERS, getOwners),
+    takeEvery(Types.REQUEST_GET_BARCODES, getBarcodes),
     takeEvery(Types.REQUEST_DETAIL_COMPLAINT, getDetailComplaint),
     takeEvery(Types.REQUEST_EDIT_COMPLAINT, putComplaint),
     fork(networkSaga, { pingInterval: 20000 }),

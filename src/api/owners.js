@@ -27,7 +27,7 @@ export const requestGetBarcodes = (payload) => {
 
   const urlBarcode = `${urlFeeder}/${payload.user_id}/status/history`;
 
-  return axios.get(urlFeeder, config)
+  return axios.get(urlBarcode, config)
     .then(function (response) {
       return response;
     }).catch(function (error) {

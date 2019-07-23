@@ -117,8 +117,12 @@ class AddComplaint extends React.PureComponent {
                               this.setState(prevState => ({
                                 ...prevState,
                                 query: item.name,
-                                user_id: item.id
-                              }))
+                                customer_name: item.name,
+                                data: {
+                                  ...prevState.data,
+                                  user_id: item.id
+                                }
+                              }));
                             }
                           }>
                             <NB.Text style={styles.autocompleteList}>{item.name}</NB.Text>
@@ -430,6 +434,13 @@ class AddComplaint extends React.PureComponent {
     return dataOwner.filter(dataOwner => dataOwner.name.search(regex) >= 0);
   }
 
+  findBarcode = () => {
+    this.props.requestGetBarcodes({
+      token: this.state.token,
+      user_id: this.state.data.user_id
+    });
+  }
+
   onSubmit = () => {
     if (this.props.screenComponent === 'Add Complaint') {
       this.props.requestAddComplaint(this.state);
@@ -440,7 +451,6 @@ class AddComplaint extends React.PureComponent {
 }
 
 AddComplaint.propTypes = {
-  isError: PropTypes.bool.isRequired,
   isConnected: PropTypes.bool.isRequired
 };
 
