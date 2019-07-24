@@ -23,6 +23,7 @@ const mapStateToProps = (state) => {
 
   let token = '';
   let dataOwner = null;
+  let dataBarcode = null;
   let detailData = null;
   const screenComponent = 'Detail Complaint';
 
@@ -32,6 +33,9 @@ const mapStateToProps = (state) => {
 
   if (state.owners.dataOwner != null && state.owners.dataOwner) {
     dataOwner = state.owners.dataOwner;
+    if (state.owners.dataBarcode.success === true) {
+      dataBarcode = state.owners.dataBarcode.data;
+    }
   }
 
   if (state.complaints.detailData != null && state.complaints.detailData != undefined) {
@@ -44,6 +48,7 @@ const mapStateToProps = (state) => {
     actionQueue,
     token,
     dataOwner,
+    dataBarcode,
     detailData,
     screenComponent
   };

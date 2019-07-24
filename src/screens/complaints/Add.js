@@ -18,6 +18,7 @@ const mapStateToProps = (state) => {
   let token = '';
   let errPostData = '';
   let dataOwner = null;
+  let dataBarcode = null;
   let screenComponent = 'Add Complaint';
 
   if (state.auth.data != null && state.auth.data != undefined) {
@@ -26,6 +27,9 @@ const mapStateToProps = (state) => {
 
   if (state.owners.dataOwner != null && state.owners.dataOwner) {
     dataOwner = state.owners.dataOwner;
+    if (state.owners.dataBarcode.success === true) {
+      dataBarcode = state.owners.dataBarcode.data;
+    }
   }
 
   return {
@@ -34,6 +38,7 @@ const mapStateToProps = (state) => {
     actionQueue,
     token,
     dataOwner,
+    dataBarcode,
     screenComponent
   };
 };

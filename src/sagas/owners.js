@@ -23,10 +23,9 @@ export function* getOwners(actions) {
 
 export function* getBarcodes(actions) {
   try {
-    let rootData = yield call(requestGetBarcodes, actions.payload);
-    console.log(rootData);
-    rootData = rootData.data;
-    if (rootData.success === true) {
+    const rootData = yield call(requestGetBarcodes, actions.payload);
+    
+    if (rootData.status === 200) {
       const data = rootData.data;
       yield put({ type: REQUEST_GET_BARCODES_SUCCESS, data });
     } else {

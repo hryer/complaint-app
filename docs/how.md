@@ -126,7 +126,15 @@ Let's say you want to create ajax call or something like that using redux saga m
     network
   });
   ```
-6. Your data will store into networks and you can check the data on actionQueue and you can check the connection is offline or online on isConnected boolean
+6. Register your actions to network middleware, you can check for the details on `src/store/store.js`
+  ```javascript
+  const networkMiddleware = createNetworkMiddleware({
+    actionTypes: ['REQUEST_ADD_COMPLAINT', 'REQUEST_EDIT_COMPLAINT'],
+    queueReleaseThrottle: 200,
+  });
+  ```
+
+7. Your data will store into networks and you can check the data on actionQueue and you can check the connection is offline or online on isConnected boolean
   ```javascript
   type NetworkState = {
     isConnected: boolean,

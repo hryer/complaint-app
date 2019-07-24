@@ -70,7 +70,7 @@ class AddComplaint extends React.PureComponent {
   }
 
   render() {
-    const { dataOwner, screenComponent } = this.props;
+    const { dataOwner, dataBarcode, screenComponent } = this.props;
     const { query, isEditable, customer_name, data } = this.state;
     const owners = this.findOwner(query);
     const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
@@ -123,11 +123,10 @@ class AddComplaint extends React.PureComponent {
                                   user_id: item.id
                                 }
                               }));
-                              console.log(this.state);
                               await this.props.requestGetBarcodes({
                                 token: this.state.token,
                                 user_id: this.state.data.user_id
-                              })
+                              });
                             }
                           }>
                             <NB.Text style={styles.autocompleteList}>{item.name}</NB.Text>
@@ -141,11 +140,30 @@ class AddComplaint extends React.PureComponent {
 
               <NB.Item stackedLabel>
                 <NB.Label>Masukan Kode Barcode Produk :</NB.Label>
-                <NB.Input
-                  value={data.feeder_barcode}
-                  onChangeText={value => this.setInput('feeder_barcode', value)}
-                  editable={isEditable}
-                />
+                {
+                  (dataBarcode != null && dataBarcode.length > 0 && isEditable)
+                    ? <NB.Item picker>
+                      <NB.Picker
+                        mode="dropdown"
+                        iosIcon={<NB.Icon name="arrow-down" />}
+                        style={{ width: undefined }}
+                        placeholder="Pilih Kode Produk"
+                        placeholderStyle={{ color: "#bfc6ea" }}
+                        placeholderIconColor="#039978"
+                        selectedValue={data.category}
+                        onValueChange={value => this.setInput('feeder_barcode', value)}
+                        editable={isEditable}
+                      >
+                        <NB.Picker.Item label="Hardware" value="hardware" />
+                        <NB.Picker.Item label="Software" value="software" />
+                      </NB.Picker>
+                    </NB.Item>
+                    : <NB.Input
+                      value={data.feeder_barcode}
+                      onChangeText={value => this.setInput('feeder_barcode', value)}
+                      editable={isEditable}
+                    />
+                }
               </NB.Item>
 
               <NB.Item stackedLabel>
@@ -451,6 +469,11 @@ class AddComplaint extends React.PureComponent {
       this.props.requestAddComplaint(this.state);
     } else {
       this.props.requestEditComplaint(this.state);
+    }
+
+    if(this.props.isConnected === false) {
+      alert('Data akan terupload ketika koneksi online');
+      NavigationService.goBack();
     }
   }
 }
