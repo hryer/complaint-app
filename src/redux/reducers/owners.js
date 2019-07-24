@@ -1,13 +1,16 @@
 import {
-  REQUEST_OWNERS, REQUEST_OWNERS_SUCCESS, REQUEST_OWNERS_FAILED,
-  RESET_REQUEST_OWNERS
+  REQUEST_GET_OWNERS, REQUEST_GET_OWNERS_SUCCESS, REQUEST_GET_OWNERS_FAILED,
+  RESET_REQUEST_OWNERS, RESET_REQUEST_BARCODES,
+  REQUEST_GET_BARCODES, REQUEST_GET_BARCODES_SUCCESS, REQUEST_GET_BARCODES_FAILED
 } from 'actions/types';
 
 export const initialState = {
   dataOwner: null,
+  dataBarcode: null,
   isError: false,
   message: '',
-  errDataOwner: null
+  errDataOwner: null,
+  errDataBarcode: null
 }
 
 export const owners = (state = initialState, action) => {
@@ -17,29 +20,55 @@ export const owners = (state = initialState, action) => {
     case RESET_REQUEST_OWNERS: {
       return {...initialState};
     }
-    case REQUEST_OWNERS: {
+    case REQUEST_GET_OWNERS: {
       return {
-        dataOwner: null,
+        ...state,
         message: 'Getting owners...',
         isError: false,
         errDataOwner: null
       };
     }
-    case REQUEST_OWNERS_SUCCESS: {
+    case REQUEST_GET_OWNERS_SUCCESS: {
       return {
+        ...state,
         dataOwner: action.data,
         message: 'Owners has been received',
         isError: false,
         errDataOwner: null
       };
     }
-    case REQUEST_OWNERS_FAILED: {
+    case REQUEST_GET_OWNERS_FAILED: {
       return {
         ...state,
-        errData: action.errData,
+        errDataOwner: action.errData,
         message: action.errData.message,
         isError: true
       };
+    }
+    case REQUEST_GET_BARCODES: {
+      return {
+        ...state,
+        message: 'Getting barcodes...',
+        isError: false,
+        errDataBarcode: null
+      }
+    }
+    case REQUEST_GET_BARCODES_SUCCESS: {
+      return {
+        ...state,
+        dataBarcode: action.data,
+        message: 'Barcodes has been received',
+        isError: false,
+        errDataBarcode: null
+      }
+    }
+    case REQUEST_GET_BARCODES_FAILED: {
+      return {
+        ...state,
+        errDataBarcode: action.errData,
+        message: action.errData.message,
+        isError: true
+      }
     }
     default:
       return {...state};

@@ -1,32 +1,43 @@
 import React from 'react';
 import RN from 'react-native';
-// import userStore from 'src/store/user';
-
 import PropTypes from 'prop-types';
 import * as NB from 'native-base';
-import * as NavigationService from 'libs/navigation/NavigationServices.js'
+import * as NavigationService from 'libs/navigation/NavigationServices.js';
+import moment from 'moment';
 
 class Login extends React.Component {
   constructor() {
     super();
-    this.state = {
-      email: '',
-      password: ''
-    };
+    this.state = this.getInitialState();
   }
 
   componentDidMount() {
-    if (this.props.data === null && this.props.data === undefined) {
+    const { isConnected, isLoggedIn, data } = this.props;
+    const { isExpired } = this.state;
+
+    if (isLoggedIn === true) {
+      const today = moment();
+      if (today.diff(data.lastLogin, 'hours') > 20) {
+        this.setInput('isExpired', true);
+      } else {
+        this.setInput('isExpired', false);
+      }
+    } else {
+      this.setInput('isExpired', true);
+    }
+    // check if user from list scene and reset the state login
+    if (this.props.data === null || this.props.data === undefined || this.props.data === isExpired) {
       this.props.resetRequestAuth();
       this.setState({
         email: '',
-        password: '',
+        password: ''
       });
     }
   }
 
   render() {
     const { message, isError, data, isLoggedIn } = this.props;
+    const { isExpired } = this.state;
 
     return (
       <NB.Container>
@@ -38,7 +49,7 @@ class Login extends React.Component {
           <NB.Right />
         </NB.Header>
         <NB.Content>
-          {isLoggedIn ?
+          {!isExpired ?
             (
               <NB.Button
                 block
@@ -75,8 +86,6 @@ class Login extends React.Component {
               </NB.Form>
             )
           }
-
-
         </NB.Content>
       </NB.Container>
     );
@@ -87,6 +96,14 @@ class Login extends React.Component {
       ...this.state,
       [name]: value,
     });
+  }
+
+  getInitialState = () => {
+    return {
+      email: '',
+      password: '',
+      isExpired: true
+    };
   }
 
   submit = () => {
@@ -103,8 +120,7 @@ class Login extends React.Component {
 
 Login.propTypes = {
   isError: PropTypes.bool.isRequired,
-  // message: PropTypes.string.isRequired,
-  // resetAuthRequest: PropTypes.func.isRequired,
+  resetRequestAuth: PropTypes.func.isRequired,
   requestLogin: PropTypes.func.isRequired,
 };
 

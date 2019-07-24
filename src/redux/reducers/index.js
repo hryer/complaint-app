@@ -11,7 +11,7 @@ const persistConfig = {
   key: "root",
   storage,
   blacklist: ["navigation"],
-  whitelist: ['auth','complaints','owners'],
+  whitelist: ['auth', 'complaints', 'owners'],
   timeout: null
 };
 

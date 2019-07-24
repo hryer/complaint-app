@@ -20,11 +20,11 @@ export const complaints = (state = initialState, action) => {
 
   switch (type) {
     case RESET_REQUEST_COMPLAINTS: {
-      return {...initialState};
+      return { ...initialState };
     }
     case REQUEST_COMPLAINTS: {
       return {
-        data: null,
+        ...state,
         message: 'Getting complaints...',
         isError: false,
         errData: null
@@ -32,6 +32,7 @@ export const complaints = (state = initialState, action) => {
     }
     case REQUEST_COMPLAINTS_SUCCESS: {
       return {
+        ...state,
         data: action.data,
         message: 'Complaints has been received',
         isError: false,
@@ -40,6 +41,7 @@ export const complaints = (state = initialState, action) => {
     }
     case REQUEST_COMPLAINTS_FAILED: {
       return {
+        ...state,
         errData: action.errData,
         message: action.errData.message,
         isError: true
@@ -71,11 +73,32 @@ export const complaints = (state = initialState, action) => {
         isError: true
       }
     }
-    /* TODO :: Make sure add complaint work with integration react native offline
-    Create reducer for edit complaint
-    Create reducer for detail complaint
-    */
+    case REQUEST_DETAIL_COMPLAINT: {
+      return {
+        ...state,
+        message: 'get detail complaint...',
+        isError: false,
+        errData: null
+      }
+    }
+    case REQUEST_DETAIL_COMPLAINT_SUCCESS: {
+      return {
+        ...state,
+        message: 'get detail complaint success',
+        detailData: action.data,
+        isError: false,
+        errData: null
+      }
+    }
+    case REQUEST_DETAIL_COMPLAINT_FAILED: {
+      return {
+        ...state,
+        message: 'get detail complaint failed',
+        isError: true,
+        errData: action.errData
+      }
+    }
     default:
-      return {...state};
+      return { ...state };
   }
 };

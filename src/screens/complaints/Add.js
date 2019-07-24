@@ -4,7 +4,11 @@ import { connect } from 'react-redux';
 
 import AddComplaint from '../../components/complaints/Add';
 import { requestAddComplaint, resetRequestComplaints } from 'actions/complaints';
-import { requestOwners, resetRequestOwners } from 'actions/owners';
+import {
+  requestGetOwners, resetRequestOwners,
+  requestGetBarcodes, resetRequestBarcodes
+} from 'actions/owners';
+import { requestLogout } from 'actions/auth';
 
 const mapStateToProps = (state) => {
   const { isLoggedIn } = state.auth;
@@ -12,35 +16,41 @@ const mapStateToProps = (state) => {
   const { isConnected, actionQueue } = state.network;
 
   let token = '';
-  let errPostData = ''; 
+  let errPostData = '';
   let dataOwner = null;
+  let dataBarcode = null;
+  let screenComponent = 'Add Complaint';
 
-  if(state.auth.data != null && state.auth.data != undefined) {
+  if (state.auth.data != null && state.auth.data != undefined) {
     token = state.auth.data.token;
   }
 
-  if(state.owners.dataOwner != null && state.owners.dataOwner){
+  if (state.owners.dataOwner != null && state.owners.dataOwner) {
     dataOwner = state.owners.dataOwner;
-  }
-  /*
-    TODO:: errPostData -> message for error when add complaint
-    if(state.complaints.errPostData != undefined){
-      errPostData = state.complaints.errPostData;
+    if (state.owners.dataBarcode != null && state.owners.dataBarcode) {
+      console.log(state.owners);
+      if (state.owners.dataBarcode.success === true) {
+        dataBarcode = state.owners.dataBarcode.data;
+      }
     }
-  */
+  }
+
   return {
     isLoggedIn,
     isConnected,
     actionQueue,
     token,
     dataOwner,
-    // errPostData
+    dataBarcode,
+    screenComponent
   };
 };
 
-const mapDispatchToProps = { 
+const mapDispatchToProps = {
   requestAddComplaint, resetRequestComplaints,
-  requestOwners, resetRequestOwners
+  requestGetOwners, resetRequestOwners,
+  requestGetBarcodes, resetRequestBarcodes,
+  requestLogout
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddComplaint);

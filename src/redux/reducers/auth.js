@@ -14,7 +14,6 @@ export const initialState = {
 
 export const auth = (state = initialState, action) => {
   const { type } = action;
-  const loginDate = Date();
 
   switch (type) {
     case REQUEST_LOGIN: {
@@ -35,10 +34,10 @@ export const auth = (state = initialState, action) => {
     case REQUEST_LOGIN_SUCCESS: {
       return {
         data: action.data,
-        message: 'Login Success',
+        message: '',
         isError: false,
         isLoggedIn: true,
-        lastLogin: loginDate
+        lastLogin: action.data.lastLogin
       };
     }
     case REQUEST_LOGOUT: {
@@ -56,12 +55,12 @@ export const auth = (state = initialState, action) => {
       };
     }
     case REQUEST_LOGOUT_SUCCESS: {
-      return {...initialState};
+      return { ...initialState };
     }
     case RESET_REQUEST_AUTH: {
-      return {...initialState};
+      return { ...initialState };
     }
     default:
-      return {...state};
+      return { ...state };
   }
 };

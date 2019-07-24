@@ -11,7 +11,7 @@ import logger from 'redux-logger';
 export default configureStore = () => {
   const sagaMiddleware = createSagaMiddleware();
   const networkMiddleware = createNetworkMiddleware({
-    actionTypes: ['REQUEST_ADD_COMPLAINT','REQUEST_EDIT_COMPLAINT'],
+    actionTypes: ['REQUEST_ADD_COMPLAINT', 'REQUEST_EDIT_COMPLAINT'],
     queueReleaseThrottle: 200,
   });
   const middleware = [networkMiddleware, sagaMiddleware, logger];
@@ -23,7 +23,6 @@ export default configureStore = () => {
 
   let persistor = persistStore(store);
 
-  // run the sagas
   sagaMiddleware.run(watchSagas);
 
   return { store, persistor };

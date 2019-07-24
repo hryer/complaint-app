@@ -1,21 +1,27 @@
 import React from 'react';
 import RN from 'react-native';
+import PropTypes from 'prop-types';
 import { checkInternetConnection, offlineActionTypes } from 'react-native-offline';
 import * as NB from 'native-base';
 import * as NavigationService from 'libs/navigation/NavigationServices.js'
 import moment from 'moment';
 import Loading from '../Loading';
+
+const styles = RN.StyleSheet.create({
+  fab: {
+    backgroundColor: '#039978',
+  }
+});
 class List extends React.PureComponent {
   constructor() {
     super();
   }
 
   async componentDidMount() {
-    this.getData();
-
     if (this.props.isLoggedIn === false) {
       NavigationService.navigate('Login');
     }
+    this.getData();
   }
 
   render() {
@@ -31,7 +37,7 @@ class List extends React.PureComponent {
             </NB.Body>
             <NB.Right>
               <NB.Subtitle>
-                Pending Upload : {this.props.actionQueue}
+                Pending Upload : {this.props.actionQueue.length}
               </NB.Subtitle>
             </NB.Right>
           </NB.Header>
@@ -49,7 +55,7 @@ class List extends React.PureComponent {
                       <NB.Text note>{item.status}</NB.Text>
                     </NB.Body>
                     <NB.Right>
-                      <NB.Icon name="arrow-forward" />
+                      <NB.Icon name="arrow-forward" onPress={() => this.getDetailData(item.id)}/>
                     </NB.Right>
                   </NB.ListItem>
                 )}
@@ -57,7 +63,7 @@ class List extends React.PureComponent {
               />
             </NB.List>
           </NB.Content>
-          <NB.Fab position='bottomRight' onPress={this.showMenu}>
+          <NB.Fab position='bottomRight' onPress={this.showMenu} style={styles.fab} >
             <NB.Icon name='menu' />
           </NB.Fab>
         </NB.Container>
@@ -66,7 +72,7 @@ class List extends React.PureComponent {
   }
 
   getData = async () => {
-    const { requestComplaints, isConnected, actionQueue, authData } = this.props;
+    const { requestComplaints, isConnected, authData } = this.props;
 
     if (isConnected === true && authData != null && authData != undefined) {
       await requestComplaints({
@@ -77,6 +83,16 @@ class List extends React.PureComponent {
     }
   }
 
+  getDetailData = async (complaint_id) => {
+    const { requestDetailComplaint, isConnected, authData } = this.props;
+
+    if (isConnected === true && authData != null && authData != undefined) {
+      await requestDetailComplaint({
+        token: authData.token,
+        complaint_id: complaint_id
+      });
+    }
+  }
   syncData = async () => {
     const isConnectedCall = await checkInternetConnection();
     
@@ -119,6 +135,11 @@ class List extends React.PureComponent {
     });
   }
 }
+
+List.propTypes = {
+  isError: PropTypes.bool.isRequired,
+  isConnected: PropTypes.bool.isRequired
+};
 
 export default List;
 
