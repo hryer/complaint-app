@@ -12,18 +12,18 @@ export function* getAuth(actions) {
   try {
     const rootData = yield call(requestLogin, actions.payload);
     if (rootData.success === false) {
-      const errData = Object.assign(rootData.data, actions.payload);
+      const errData = {...rootData.data, ...actions.payload};
       yield put({ type: REQUEST_LOGIN_FAILED, errData });
     } else {
       const loginDate = moment();
-      let data = Object.assign(rootData.data, actions.payload);
-      data = Object.assign(data, { lastLogin: loginDate });
+      let data = {...rootData.data, ...actions.payload};
+      const temp = { lastLogin: loginDate };
+      data = {...data, ...temp};
       yield put({ type: REQUEST_LOGIN_SUCCESS, data });
       NavigationService.navigate('Complaints');
     }
   }
   catch (errData) {
-    errData = Object.assign(errData, actions.payload);
     yield put({ type: REQUEST_LOGIN_FAILED, errData });
     NavigationService.navigate('Login');
   }

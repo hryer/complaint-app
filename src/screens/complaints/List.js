@@ -12,7 +12,7 @@ import { requestLogout } from 'actions/auth';
 
 const mapStateToProps = (state) => {
   const { isLoggedIn } = state.auth;
-  const authData = state.auth.data;
+  const authData = state.auth.data || {};
   const { data, isError, message } = state.complaints;
   const { isConnected, actionQueue } = state.network;
 

@@ -11,9 +11,8 @@ class Login extends React.Component {
     this.state = this.getInitialState();
   }
 
-  componentDidMount() {
-    const { isConnected, isLoggedIn, data } = this.props;
-    const { isExpired } = this.state;
+  componentWillMount() {
+    const { isLoggedIn, data, resetRequestAuth } = this.props;
 
     if (isLoggedIn === true) {
       const today = moment();
@@ -25,18 +24,17 @@ class Login extends React.Component {
     } else {
       this.setInput('isExpired', true);
     }
-    // check if user from list scene and reset the state login
-    if (this.props.data === null || this.props.data === undefined || this.props.data === isExpired) {
-      this.props.resetRequestAuth();
+
+    if (data === null || data === undefined) {
+      resetRequestAuth();
       this.setState({
         email: '',
         password: ''
       });
     }
   }
-
   render() {
-    const { message, isError, data, isLoggedIn } = this.props;
+    const { message } = this.props;
     const { isExpired } = this.state;
 
     return (
@@ -78,7 +76,7 @@ class Login extends React.Component {
                 <NB.Text>{message}</NB.Text>
                 <NB.Button
                   block
-                  onPress={this.submit}
+                  onPress={this.onSubmit}
                   style={{ margin: 15 }}
                 >
                   <NB.Text>Submit</NB.Text>
@@ -106,7 +104,7 @@ class Login extends React.Component {
     };
   }
 
-  submit = () => {
+  onSubmit = () => {
     const { requestLogin } = this.props;
     const { email, password } = this.state;
     requestLogin({ email, password });
