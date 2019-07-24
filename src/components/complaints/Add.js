@@ -113,8 +113,8 @@ class AddComplaint extends React.PureComponent {
                         onChangeText={value => this.setInput('query', value)}
                         renderItem={({ item, i }) => (
                           <RN.TouchableOpacity onPress={
-                            () => {
-                              this.setState(prevState => ({
+                            async () => {
+                              await this.setState(prevState => ({
                                 ...prevState,
                                 query: item.name,
                                 customer_name: item.name,
@@ -123,6 +123,11 @@ class AddComplaint extends React.PureComponent {
                                   user_id: item.id
                                 }
                               }));
+                              console.log(this.state);
+                              await this.props.requestGetBarcodes({
+                                token: this.state.token,
+                                user_id: this.state.data.user_id
+                              })
                             }
                           }>
                             <NB.Text style={styles.autocompleteList}>{item.name}</NB.Text>
