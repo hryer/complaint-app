@@ -15,13 +15,15 @@ class Login extends React.Component {
     const { isConnected, isLoggedIn, data } = this.props;
     const { isExpired } = this.state;
 
-    if( isLoggedIn === true ) {
+    if (isLoggedIn === true) {
       const today = moment();
-      if(today.diff(data.lastLogin, 'hours') > 20){
+      if (today.diff(data.lastLogin, 'hours') > 20) {
         this.setInput('isExpired', true);
-      }else {
+      } else {
         this.setInput('isExpired', false);
       }
+    } else {
+      this.setInput('isExpired', true);
     }
     // check if user from list scene and reset the state login
     if (this.props.data === null || this.props.data === undefined || this.props.data === isExpired) {
