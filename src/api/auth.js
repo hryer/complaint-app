@@ -2,7 +2,6 @@ import axios from 'axios'
 import {urlLogin} from '../config';
 
 export const requestLogin = (payload) => {
-  console.log(payload);
   var config = {
     headers: {
       'Content-Type': 'application/json',

@@ -28,7 +28,6 @@ const mapStateToProps = (state) => {
   if (state.owners.dataOwner != null && state.owners.dataOwner) {
     dataOwner = state.owners.dataOwner;
     if (state.owners.dataBarcode != null && state.owners.dataBarcode) {
-      console.log(state.owners);
       if (state.owners.dataBarcode.success === true) {
         dataBarcode = state.owners.dataBarcode.data;
       }

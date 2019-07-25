@@ -468,15 +468,11 @@ class AddComplaint extends React.PureComponent {
   }
 
   onSubmit = () => {
-    console.log(this.state);
-    console.log('this.props');
-    console.log(this.props);
-
-    // if (this.props.screenComponent === 'Add Complaint') {
-    //   this.props.requestAddComplaint(this.state);
-    // } else {
-    //   this.props.requestEditComplaint(this.state);
-    // }
+    if (this.props.screenComponent === 'Add Complaint') {
+      this.props.requestAddComplaint(this.state);
+    } else {
+      this.props.requestEditComplaint(this.state);
+    }
 
     if(this.props.isConnected === false) {
       alert('Data akan terupload ketika koneksi online');
