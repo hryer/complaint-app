@@ -3,6 +3,7 @@ package com.foapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.instabug.reactlibrary.RNInstabugReactnativePackage;
 import com.reactnativecommunity.netinfo.NetInfoPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.facebook.react.ReactNativeHost;
@@ -25,8 +26,14 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new NetInfoPackage(),
-            new RNGestureHandlerPackage()
+          new RNInstabugReactnativePackage.Builder("3790695211b83f817e88113377690bd4",MainApplication.this)
+						.setInvocationEvent("screenshot")
+						.setPrimaryColor("#1D82DC")
+						.setFloatingEdge("left")
+						.setFloatingButtonOffsetFromTop(250)
+						.build(),
+          new NetInfoPackage(),
+          new RNGestureHandlerPackage()
       );
     }
 

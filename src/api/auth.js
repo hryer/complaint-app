@@ -1,6 +1,5 @@
 import axios from 'axios'
 import {urlLogin} from '../config';
-// import console = require('console');
 
 export const requestLogin = (payload) => {
   console.log(payload);

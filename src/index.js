@@ -11,6 +11,7 @@ import getTheme from '../native-base-theme/components';
 import material from '../native-base-theme/variables/material';
 import { PersistGate } from "redux-persist/integration/react";
 import Loading from './components/Loading';
+import Instabug from 'instabug-reactnative';
 
 import { name as appName } from '../app.json';
 
@@ -19,6 +20,10 @@ const store = confStore.store;
 const persistor = confStore.persistor;
 
 export default class App extends Component {
+  constructor() {
+    super();
+    Instabug.startWithToken('3790695211b83f817e88113377690bd4', [Instabug.invocationEvent.screenshot]);
+  }
 
   render() {
     return (

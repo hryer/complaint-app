@@ -154,8 +154,11 @@ class AddComplaint extends React.PureComponent {
                         onValueChange={value => this.setInput('feeder_barcode', value)}
                         editable={isEditable}
                       >
-                        <NB.Picker.Item label="Hardware" value="hardware" />
-                        <NB.Picker.Item label="Software" value="software" />
+                        {
+                          dataBarcode.map((data) => {
+                            return <NB.Picker.Item key={data.barcode} label={data.barcode} value={data.barcode} />
+                          })
+                        }
                       </NB.Picker>
                     </NB.Item>
                     : <NB.Input
@@ -465,11 +468,15 @@ class AddComplaint extends React.PureComponent {
   }
 
   onSubmit = () => {
-    if (this.props.screenComponent === 'Add Complaint') {
-      this.props.requestAddComplaint(this.state);
-    } else {
-      this.props.requestEditComplaint(this.state);
-    }
+    console.log(this.state);
+    console.log('this.props');
+    console.log(this.props);
+
+    // if (this.props.screenComponent === 'Add Complaint') {
+    //   this.props.requestAddComplaint(this.state);
+    // } else {
+    //   this.props.requestEditComplaint(this.state);
+    // }
 
     if(this.props.isConnected === false) {
       alert('Data akan terupload ketika koneksi online');

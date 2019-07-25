@@ -13,7 +13,7 @@ export function* getComplaints(actions) {
     const rootData = yield call(requestGetComplaints, actions.payload);
 
     if (rootData.success === false) {
-      const errData = Object.assign(rootData.data, actions.payload);
+      const errData = {...rootData.data, ...actions.payload};
       yield put({ type: REQUEST_COMPLAINTS_FAILED, errData });
     } else {
       const data = rootData.data;
@@ -21,7 +21,6 @@ export function* getComplaints(actions) {
     }
   }
   catch (errData) {
-    errData = Object.assign(errData, actions.payload);
     yield put({ type: REQUEST_COMPLAINTS_FAILED, errData });
   }
 }
