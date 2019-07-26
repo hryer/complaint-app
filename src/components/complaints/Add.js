@@ -70,7 +70,7 @@ class AddComplaint extends React.PureComponent {
   }
 
   render() {
-    const { dataOwner, dataBarcode, screenComponent } = this.props;
+    const { dataOwner, dataBarcode, screenComponent, isConnected } = this.props;
     const { query, isEditable, customer_name, data } = this.state;
     const owners = this.findOwner(query);
     const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
@@ -141,7 +141,7 @@ class AddComplaint extends React.PureComponent {
               <NB.Item stackedLabel>
                 <NB.Label>Masukan Kode Barcode Produk :</NB.Label>
                 {
-                  (dataBarcode != null && dataBarcode.length > 0 && isEditable)
+                  (dataBarcode != null && dataBarcode.length > 0 && isEditable && isConnected)
                     ? <NB.Item picker>
                       <NB.Picker
                         mode="dropdown"
