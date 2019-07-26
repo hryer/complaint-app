@@ -17,7 +17,7 @@ class List extends React.PureComponent {
     super();
   }
 
-  async componentDidMount() {
+  async componentWillMount() {
     if (this.props.isLoggedIn === false) {
       NavigationService.navigate('Login');
     }

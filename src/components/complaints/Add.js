@@ -154,8 +154,11 @@ class AddComplaint extends React.PureComponent {
                         onValueChange={value => this.setInput('feeder_barcode', value)}
                         editable={isEditable}
                       >
-                        <NB.Picker.Item label="Hardware" value="hardware" />
-                        <NB.Picker.Item label="Software" value="software" />
+                        {
+                          dataBarcode.map((data) => {
+                            return <NB.Picker.Item key={data.barcode} label={data.barcode} value={data.barcode} />
+                          })
+                        }
                       </NB.Picker>
                     </NB.Item>
                     : <NB.Input
