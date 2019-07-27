@@ -77,7 +77,7 @@ class List extends React.PureComponent {
     if (isConnected === true && authData != null && authData != undefined) {
       await requestComplaints({
         token: authData.token,
-        startDate: moment().subtract(90, 'days').format('YYYY-MM-DD'),
+        startDate: moment().subtract(30, 'days').format('YYYY-MM-DD'),
         endDate: moment().format('YYYY-MM-DD')
       });
     }

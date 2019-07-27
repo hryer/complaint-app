@@ -59,7 +59,7 @@ export const complaints = (state = initialState, action) => {
     case REQUEST_ADD_COMPLAINT_SUCCESS: {
       return {
         ...state,
-        postData: 'complaint has been added',
+        postData: action.data,
         message: 'Complaint has been added',
         isError: false,
         errPostData: null

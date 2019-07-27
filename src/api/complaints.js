@@ -39,7 +39,8 @@ export const requestAddComplaint = (payload) => {
       dataComplaint.append(key,temp[key]);
     }
   });
-
+  console.log('api');
+  console.log(dataComplaint);
   return axios.post(urlComplaints,dataComplaint,config)
     .then(function (response) {
       return response;

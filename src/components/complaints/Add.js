@@ -448,6 +448,7 @@ class AddComplaint extends React.PureComponent {
           [name]: value
         }
       });
+      console.log(this.state.data);
     }
   }
 
@@ -467,17 +468,52 @@ class AddComplaint extends React.PureComponent {
     });
   }
 
-  onSubmit = () => {
-    if (this.props.screenComponent === 'Add Complaint') {
-      this.props.requestAddComplaint(this.state);
-    } else {
-      this.props.requestEditComplaint(this.state);
+  submitValidation = () => {
+    console.log('kontol');
+    const { 
+        user_id,
+        feeder_barcode,
+        category,
+        subcategory,
+        complaint,
+        complaint_type,
+        cause,
+        troubleshoot,
+        status,
+        source,
+        issued_at,
+        resolved_at,
+        cr,
+        fo
+    } = this.state.data;
+
+    if(user_id === '' || feeder_barcode === '' || category === '' || subcategory === '' 
+      || complaint === '' || complaint_type === '' || cause === '' || troubleshoot === '' 
+      || status === '' || source === '' || issued_at === '' || resolved_at === '' || cr === '' || fo === '') {
+        console.log(this.state.data);
+        return false;
+    }else {
+      return true;
     }
 
-    if(this.props.isConnected === false) {
-      alert('Data akan terupload ketika koneksi online');
-      NavigationService.goBack();
-    }
+  }
+
+  onSubmit = () => {
+    const checker = this.submitValidation();
+    if(checker === false){
+      alert('SEMUA DATA HARUS DI ISI!!!');
+    }else {
+      if (this.props.screenComponent === 'Add Complaint') {
+        this.props.requestAddComplaint(this.state);
+      } else {
+        this.props.requestEditComplaint(this.state);
+      }
+  
+      if(this.props.isConnected === false) {
+        alert('Data akan terupload ketika koneksi online');
+        NavigationService.goBack();
+      }
+    } 
   }
 }
 
