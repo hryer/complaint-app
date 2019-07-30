@@ -4,16 +4,19 @@
   * **Show List Complaints ( last 90 days )**
     * list complaint (online)
     * list complaint (offline)
-    * sync data
+    * pull to refresh (sync data)
+    * menu -> sync data, add, logout
     * show how many pending edit / add complaint
   * **Input complaint**
     * autocomplete choose customer
     * input complaint (online)
     * input complaint (offline)
+    * Autopick Barcode
   * **Edit Complaint**
     * autocomplete choose customer
     * input complaint (online)
     * input complaint (offline)
+    * Autopick Barcode
 
 ## React Native Offline Architecture
 <iframe src="https://drive.google.com/file/d/1r4jD_f9fQ4Fe-pgAfEZEsjmWRpYgeL3M/preview" width="640" height="480"></iframe>

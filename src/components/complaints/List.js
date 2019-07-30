@@ -80,7 +80,7 @@ class List extends React.PureComponent {
   }
 
   getData = async () => {
-    const { requestComplaints, isConnected, authData } = this.props;
+    const { requestComplaints, requestGetOwners, isConnected, authData } = this.props;
 
     if (isConnected === true && authData != null && authData != undefined) {
       await requestComplaints({
@@ -88,6 +88,9 @@ class List extends React.PureComponent {
         startDate: moment().subtract(90, 'days').format('YYYY-MM-DD'),
         endDate: moment().format('YYYY-MM-DD')
       });
+      await requestGetOwners({
+        token: authData.token
+      })
     }
   }
 
