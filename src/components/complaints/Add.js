@@ -5,7 +5,7 @@ import * as NB from 'native-base';
 import * as NavigationService from 'libs/navigation/NavigationServices.js';
 import moment from 'moment';
 import Autocomplete from 'react-native-autocomplete-input';
-import Loading from '../Loading';
+import Loading from '../utils/Loading';
 
 const styles = RN.StyleSheet.create({
   autocompleteContainer: {
@@ -70,7 +70,7 @@ class AddComplaint extends React.PureComponent {
   }
 
   render() {
-    const { dataOwner, dataBarcode, screenComponent } = this.props;
+    const { dataOwner, dataBarcode, screenComponent, isConnected } = this.props;
     const { query, isEditable, customer_name, data } = this.state;
     const owners = this.findOwner(query);
     const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
@@ -141,7 +141,7 @@ class AddComplaint extends React.PureComponent {
               <NB.Item stackedLabel>
                 <NB.Label>Masukan Kode Barcode Produk :</NB.Label>
                 {
-                  (dataBarcode != null && dataBarcode.length > 0 && isEditable)
+                  (dataBarcode != null && dataBarcode.length > 0 && isEditable && isConnected)
                     ? <NB.Item picker>
                       <NB.Picker
                         mode="dropdown"
@@ -467,17 +467,50 @@ class AddComplaint extends React.PureComponent {
     });
   }
 
-  onSubmit = () => {
-    if (this.props.screenComponent === 'Add Complaint') {
-      this.props.requestAddComplaint(this.state);
-    } else {
-      this.props.requestEditComplaint(this.state);
+  submitValidation = () => {
+    const { 
+        user_id,
+        feeder_barcode,
+        category,
+        subcategory,
+        complaint,
+        complaint_type,
+        cause,
+        troubleshoot,
+        status,
+        source,
+        issued_at,
+        resolved_at,
+        cr,
+        fo
+    } = this.state.data;
+
+    if(user_id === '' || feeder_barcode === '' || category === '' || subcategory === '' 
+      || complaint === '' || complaint_type === '' || cause === '' || troubleshoot === '' 
+      || status === '' || source === '' || issued_at === '' || resolved_at === '' || cr === '' || fo === '') {
+        return false;
+    }else {
+      return true;
     }
 
-    if(this.props.isConnected === false) {
-      alert('Data akan terupload ketika koneksi online');
-      NavigationService.goBack();
-    }
+  }
+
+  onSubmit = () => {
+    const checker = this.submitValidation();
+    if(checker === false){
+      alert('SEMUA DATA HARUS DI ISI!!!');
+    }else {
+      if (this.props.screenComponent === 'Add Complaint') {
+        this.props.requestAddComplaint(this.state);
+      } else {
+        this.props.requestEditComplaint(this.state);
+      }
+  
+      if(this.props.isConnected === false) {
+        alert('Data akan terupload ketika koneksi online');
+        NavigationService.goBack();
+      }
+    } 
   }
 }
 

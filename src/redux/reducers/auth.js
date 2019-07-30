@@ -34,7 +34,7 @@ export const auth = (state = initialState, action) => {
     case REQUEST_LOGIN_SUCCESS: {
       return {
         data: action.data,
-        message: 'login success',
+        message: '',
         isError: false,
         isLoggedIn: true,
         lastLogin: action.data.lastLogin

@@ -47,7 +47,7 @@ export function* postComplaint(actions) {
     const data = yield call(requestAddComplaint, actions.payload);
 
     if (data.status === 204) {
-      yield put({ type: REQUEST_ADD_COMPLAINT_SUCCESS });
+      yield put({ type: REQUEST_ADD_COMPLAINT_SUCCESS, data });
       NavigationService.navigate('Complaints');
     } else {
       const errData = [...data];
