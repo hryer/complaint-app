@@ -56,13 +56,7 @@ class AddComplaint extends React.PureComponent {
 
   componentDidMount() {
     this.state.token = this.props.token;
-    const { isConnected, requestGetOwners, screenComponent } = this.props;
-
-    if (isConnected === true) {
-      requestGetOwners({
-        token: this.state.token
-      });
-    }
+    const { isConnected, screenComponent } = this.props;
 
     if (screenComponent === 'Detail Complaint') {
       this.getInitialData();
@@ -70,7 +64,7 @@ class AddComplaint extends React.PureComponent {
   }
 
   render() {
-    const { dataOwner, dataBarcode, screenComponent, isConnected } = this.props;
+    const { dataOwner, dataBarcode, screenComponent, isConnected } = this.props  || '';
     const { query, isEditable, customer_name, data } = this.state;
     const owners = this.findOwner(query);
     const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
@@ -101,9 +95,8 @@ class AddComplaint extends React.PureComponent {
               <NB.Item stackedLabel>
                 <NB.Label>Pilih Customer :</NB.Label>
                 {
-                  !isEditable
-                    ? <NB.Input editable={isEditable}>{customer_name}</NB.Input>
-                    : <RN.View style={styles.autocompleteContainer}>
+                  (dataOwner != null && dataOwner.length > 0 && isEditable)
+                    ? <RN.View style={styles.autocompleteContainer}>
                       <Autocomplete
                         containerStyle={styles.autocompleteInput}
                         autoCapitalize="none"
@@ -135,6 +128,7 @@ class AddComplaint extends React.PureComponent {
                         keyExtractor={item => item.id.toString()}
                       />
                     </RN.View>
+                    : <NB.Input editable={isEditable}>{customer_name}</NB.Input>
                 }
               </NB.Item>
 

@@ -8,6 +8,9 @@ import {
   requestComplaints, resetRequestComplaints,
   requestDetailComplaint,
 } from 'actions/complaints';
+import {
+  requestGetOwners, resetRequestOwners
+} from 'actions/owners';
 import { requestLogout } from 'actions/auth';
 
 const mapStateToProps = (state) => {
@@ -27,6 +30,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = { requestComplaints, resetRequestComplaints, requestDetailComplaint, requestLogout, syncConnection };
+const mapDispatchToProps = { 
+  requestComplaints, resetRequestComplaints,
+  requestDetailComplaint,
+  requestGetOwners, resetRequestOwners,
+  requestLogout, syncConnection };
 
 export default connect(mapStateToProps, mapDispatchToProps)(List);
