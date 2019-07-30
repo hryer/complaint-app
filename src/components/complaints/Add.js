@@ -5,7 +5,7 @@ import * as NB from 'native-base';
 import * as NavigationService from 'libs/navigation/NavigationServices.js';
 import moment from 'moment';
 import Autocomplete from 'react-native-autocomplete-input';
-import Loading from '../Loading';
+import Loading from '../utils/Loading';
 
 const styles = RN.StyleSheet.create({
   autocompleteContainer: {

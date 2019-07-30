@@ -10,7 +10,7 @@ import * as NB from 'native-base';
 import getTheme from '../native-base-theme/components';
 import material from '../native-base-theme/variables/material';
 import { PersistGate } from "redux-persist/integration/react";
-import Loading from './components/Loading';
+import Loading from './components/utils/Loading';
 import Instabug from 'instabug-reactnative';
 
 import { name as appName } from '../app.json';

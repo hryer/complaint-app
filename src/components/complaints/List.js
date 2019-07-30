@@ -5,7 +5,7 @@ import { checkInternetConnection, offlineActionTypes } from 'react-native-offlin
 import * as NB from 'native-base';
 import * as NavigationService from 'libs/navigation/NavigationServices.js'
 import moment from 'moment';
-import Loading from '../Loading';
+import Loading from '../utils/Loading';
 
 const styles = RN.StyleSheet.create({
   fab: {
@@ -15,6 +15,10 @@ const styles = RN.StyleSheet.create({
 class List extends React.PureComponent {
   constructor() {
     super();
+    this.state = {
+      isFetching: false,
+      refreshing: false
+    }
   }
 
   async componentWillMount() {
@@ -25,7 +29,8 @@ class List extends React.PureComponent {
   }
 
   render() {
-    if (this.props.data === null || this.props.data === undefined) {
+    const { data, actionQueue } = this.props;
+    if (data === null || data === undefined) {
       return <Loading />
     } else {
       return (
@@ -37,35 +42,39 @@ class List extends React.PureComponent {
             </NB.Body>
             <NB.Right>
               <NB.Subtitle>
-                Pending Upload : {this.props.actionQueue.length}
+                Pending Upload : {actionQueue.length}
               </NB.Subtitle>
             </NB.Right>
           </NB.Header>
-          <NB.Content>
-            <NB.List>
-              <RN.FlatList
-                data={this.props.data}
-                renderItem={({ item }) => (
-                  <NB.ListItem key={item.id.toString()}>
-                    <NB.Left>
-                      <NB.Text>{item.category}</NB.Text>
-                    </NB.Left>
-                    <NB.Body>
-                      <NB.Text>{item.complaint}</NB.Text>
-                      <NB.Text note>{item.status}</NB.Text>
-                    </NB.Body>
-                    <NB.Right>
-                      <NB.Icon name="arrow-forward" onPress={() => this.getDetailData(item.id)}/>
-                    </NB.Right>
-                  </NB.ListItem>
-                )}
-                keyExtractor={item => item.id.toString()}
-              />
-            </NB.List>
-          </NB.Content>
-          <NB.Fab position='bottomRight' onPress={this.showMenu} style={styles.fab} >
-            <NB.Icon name='menu' />
-          </NB.Fab>
+          <NB.List>
+            <RN.FlatList
+              data={data}
+              refreshControl={
+                <RN.RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={this.onRefresh}
+                />
+              }
+              renderItem={({ item }) => (
+                <NB.ListItem key={item.id.toString()} onPress={() => this.getDetailData(item.id)}>
+                  <NB.Left>
+                    <NB.Text>{item.complaint}</NB.Text>
+                  </NB.Left>
+                  <NB.Body>
+                    <NB.Text>{item.status}</NB.Text>
+                    <NB.Text note>{item.category}</NB.Text>
+                  </NB.Body>
+                  <NB.Right>
+                    <NB.Icon name="arrow-forward" />
+                  </NB.Right>
+                </NB.ListItem>
+              )}
+              keyExtractor={item => item.id.toString()}
+            />
+            <NB.Fab position='bottomRight' onPress={this.showMenu} style={styles.fab} >
+              <NB.Icon name='menu' />
+            </NB.Fab>
+          </NB.List>
         </NB.Container>
       )
     }
@@ -77,7 +86,7 @@ class List extends React.PureComponent {
     if (isConnected === true && authData != null && authData != undefined) {
       await requestComplaints({
         token: authData.token,
-        startDate: moment().subtract(30, 'days').format('YYYY-MM-DD'),
+        startDate: moment().subtract(90, 'days').format('YYYY-MM-DD'),
         endDate: moment().format('YYYY-MM-DD')
       });
     }
@@ -95,7 +104,7 @@ class List extends React.PureComponent {
   }
   syncData = async () => {
     const isConnectedCall = await checkInternetConnection();
-    
+
     if (isConnectedCall != this.props.isConnected) {
       this.setState(isConnected, isConnectedCall);
       this.props.syncConnection({ isConnected: isConnected });
@@ -104,7 +113,18 @@ class List extends React.PureComponent {
     this.getData();
     alert('sync data success');
   }
-  
+
+  onRefresh = async () => {
+    this.setState({
+      refreshing: true
+    });
+
+    await this.syncData();
+    await this.setState({
+      refreshing: false
+    });
+  };
+
   showMenu = () => {
     const options = [
       {
