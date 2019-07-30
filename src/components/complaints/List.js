@@ -16,7 +16,6 @@ class List extends React.PureComponent {
   constructor() {
     super();
     this.state = {
-      isFetching: false,
       refreshing: false
     }
   }
@@ -71,10 +70,10 @@ class List extends React.PureComponent {
               )}
               keyExtractor={item => item.id.toString()}
             />
-            <NB.Fab position='bottomRight' onPress={this.showMenu} style={styles.fab} >
-              <NB.Icon name='menu' />
-            </NB.Fab>
           </NB.List>
+          <NB.Fab position='bottomRight' onPress={this.showMenu} style={styles.fab} >
+            <NB.Icon name='menu' />
+          </NB.Fab>
         </NB.Container>
       )
     }

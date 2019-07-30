@@ -448,7 +448,6 @@ class AddComplaint extends React.PureComponent {
           [name]: value
         }
       });
-      console.log(this.state.data);
     }
   }
 
@@ -469,7 +468,6 @@ class AddComplaint extends React.PureComponent {
   }
 
   submitValidation = () => {
-    console.log('kontol');
     const { 
         user_id,
         feeder_barcode,
@@ -490,7 +488,6 @@ class AddComplaint extends React.PureComponent {
     if(user_id === '' || feeder_barcode === '' || category === '' || subcategory === '' 
       || complaint === '' || complaint_type === '' || cause === '' || troubleshoot === '' 
       || status === '' || source === '' || issued_at === '' || resolved_at === '' || cr === '' || fo === '') {
-        console.log(this.state.data);
         return false;
     }else {
       return true;
